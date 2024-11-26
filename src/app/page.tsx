@@ -1,7 +1,7 @@
 import Image from "next/image";
 import "../styles/globals.scss";
 import styles from "./page.module.scss";
-import ContentCard from "@/components/ContentCard";
+// import ContentCard from "@/components/ContentCard";
 
 export default function Home() {
   return (
