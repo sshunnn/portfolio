@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className={styles.Top__mainWrapper}>
       <main className={styles.main}>
-        <div style={{ position: "relative", width: "100%", height: "600px" }}>
+        <div style={{ width: "100%", height: "600px" }}>
           <Image
             src="/background/headerImage.png"
             alt="Header Image"
