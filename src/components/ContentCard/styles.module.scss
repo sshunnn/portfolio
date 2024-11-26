@@ -1,0 +1,10 @@
+@use "../../styles/variables.scss" as *;
+
+.ContentCard {
+    &__wrapper{
+        background-color: $service-bg-color-red;
+        border-radius: $service-size * 4;
+        width: 300px;
+        height: 350px;
+    }
+}
