@@ -1,0 +1,40 @@
+@use "../../styles/variables.scss" as *;
+
+.MainHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: $service-size * 6;
+  }
+
+  &__navigationWrapper {
+    display: flex;
+    margin-left: 300px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__siteName {
+    font-size: $service-font-size-xl;
+    font-weight: bold;
+    margin-left: $service-size * 6;
+    text-shadow: 7px 4px 0 rgba(255, 163, 82, 0.3);
+  }
+
+  &__headerLink {
+    font-size: $service-font-size-mf;
+    font-weight: bold;
+    margin-left: $service-size * 14;
+
+    &:hover, &:visited, &:visited:hover {
+      color: black; // TODO：varibalesを使う
+      opacity: 0.75;
+    }
+  }
+}
