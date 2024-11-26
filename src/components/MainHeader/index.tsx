@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 
 export default function MainHeader() {
   return (
-    <header>
+    <header className={styles.MainHeader}>
       <div className={styles.MainHeader__wrapper}>
         <p className={styles.MainHeader__siteName}>Shun's logs</p>
         <nav className={styles.MainHeader__navigationWrapper}>
