@@ -1,26 +1,28 @@
 @use "../styles/variables.scss" as *;
 
-
 .Top {
   &__mainWrapper {
-    position: relative;
-  }
-
-  &__MainHeading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    font-weight: 700;
-    color: #fff;
-    text-align: center;
+    // position: relative;
   }
 
   &__imageWrapper {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 600px;
+    height: 600px; /* 画像の高さに合わせて調整 */
+    z-index: -1;
+  }
+
+  &__MainHeading {
+    // position: absolute;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    // font-size: 3rem;
+    // font-weight: 700;
+    // color: #fff;
+    text-align: center;
   }
 
   // &__mainLogo {

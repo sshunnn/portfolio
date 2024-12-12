@@ -7,14 +7,9 @@ import ContentCard from "@/components/ContentCard";
 
 export default function Home() {
   return (
-    <div className={styles.Top__mainWrapper}>
-      <main>
-        <ContentHeading
-          headLevel="h1"
-          text="About my portfolio Detail"
-          className={styles.Top__MainHeading}
-        />
-        <div style={{ width: "100%", height: "600px" }}>
+    <>
+      <div className={styles.Top__mainWrapper}>
+        <div className={styles.Top__imageWrapper}>
           <Image
             src="/background/headerImage.png"
             alt="Header Image"
@@ -24,8 +19,15 @@ export default function Home() {
             loading="lazy"
           />
         </div>
-        <ContentCard title="test1" description="test description"/>
+        <ContentHeading
+          headLevel="h1"
+          text="About my portfolio Detail"
+          className={styles.Top__MainHeading}
+        />
+      </div>
+      <main>
+        <ContentCard title="test1" description="test description" />
       </main>
-    </div>
+    </>
   );
 }
