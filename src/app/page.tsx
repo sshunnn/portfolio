@@ -3,6 +3,7 @@ import "../styles/globals.scss";
 import styles from "./page.module.scss";
 // import ContentCard from "@/components/ContentCard";
 import ContentHeading from "@/components/ContentHeading";
+import ContentCard from "@/components/ContentCard";
 
 export default function Home() {
   return (
@@ -17,13 +18,13 @@ export default function Home() {
           <Image
             src="/background/headerImage.png"
             alt="Header Image"
-            layout="fill"
+            width={1920}
+            height={600}
             objectFit="cover"
             loading="lazy"
           />
         </div>
-        {/* <ContentCard /> */}
-        
+        <ContentCard title="test1" description="test description"/>
       </main>
     </div>
   );

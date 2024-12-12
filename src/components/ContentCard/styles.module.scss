@@ -1,10 +1,13 @@
 @use "../../styles/variables.scss" as *;
 
 .ContentCard {
-    &__wrapper{
-        background-color: $service-bg-color-red;
-        border-radius: $service-size * 4;
-        width: 280px;
-        height: 365px;
-    }
+  &__wrapper {
+    // background-color: $service-bg-color-red;
+    background-image: url("/public/Logo/contentsCard.jpeg");
+    background-size: cover; /* 画像をコンテナに合わせて拡大縮小 */
+    background-position: center; /* 画像を中央に配置 */
+    border-radius: $service-size * 4;
+    width: 280px;
+    height: 365px;
+  }
 }
