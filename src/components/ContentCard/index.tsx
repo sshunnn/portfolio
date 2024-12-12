@@ -4,45 +4,25 @@ import styles from "./styles.module.scss";
 export type Props = {
   title: string | null;
   description: string;
-  imagePath: string;
+  imageType?: "rock" | "water";
   colorSetting?: string | null;
-  children: React.ReactNode;
 };
 
 export default function ContentCard(props: Props) {
   return (
       <div className={styles.ContentCard__wrapper}>
-        <div className={styles.MainHeader__logoWrapper}>
-          <Image
-            className={styles.MainHeader__mainLogo}
-            src="/Logo/headerLogo.png"
-            alt="Header Logo"
-            width={72}
-            height={72}
-            priority
-          />
-          <p className={styles.MainHeader__siteName}>My Portfolio</p>
+        <div className={styles.ContentCard__content}>
+          <h1 className={styles.ContentCard__title}>{props.title}</h1>
+          <p className={styles.ContentCard__description}>{props.description}</p>
         </div>
-        <nav className={styles.MainHeader__navigationWrapper}>
-          <a
-            href="https://nextjs.org/learn"
-            className={styles.MainHeader__headerLink}
-          >
-            Detail
-          </a>
-          <a
-            href="https://nextjs.org/docs"
-            className={styles.MainHeader__headerLink}
-          >
-            About
-          </a>
-          <a
-            href="https://nextjs.org/learn"
-            className={styles.MainHeader__headerLink}
-          >
-            Contact
-          </a>
-        </nav>
+        <div className={styles.ContentCard__imageWrapper}>
+          <Image
+            src={props.imageType == "rock" ? `/Logo/contentsCard.png`: `/Logo/${props.imageType}.png`}
+            alt="Background Image"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </div>
   );
 }
