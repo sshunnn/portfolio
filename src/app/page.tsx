@@ -2,6 +2,7 @@ import Image from "next/image";
 import "../styles/globals.scss";
 import styles from "./page.module.scss";
 import ContentHeading from "@/components/ContentHeading";
+import ContentCard from "@/components/ContentCard";
 
 export default function Home() {
   return (
@@ -26,9 +27,9 @@ export default function Home() {
           </p>
         </div>
       </div>
-      {/* <main>
+      <main>
         <ContentCard title="test1" description="test description" />
-      </main> */}
+      </main>
     </>
   );
 }
