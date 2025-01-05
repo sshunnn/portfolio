@@ -9,7 +9,7 @@ type headingLevel = "h1" | "h2" | "h3" | "h4" | "h5";
 export type Props = {
   headLevel: headingLevel;
   text: string;
-  className?: string | null;
+  className?: string;
   icon?: string | null; // TODO ここのtypeの定義を追加する
   iconType?: "before" | "after";
 };
@@ -18,14 +18,16 @@ const NestedComponent = ({
   headingTag,
   headingText,
   subText,
+  className,
 }: {
   headingTag: headingLevel;
   headingText: string;
   subText?: string | null;
+  className?: string;
 }) => {
   return createElement(
     "div",
-    { className: "parent" },
+    { className: className },
     createElement(headingTag, null, headingText),
     createElement("p", null, subText)
   );
@@ -35,14 +37,14 @@ const NestedComponent = ({
 export default function ContentHeading({
   headLevel = "h1",
   text = "",
-  className = null,
+  className = undefined,
   icon,
   iconType,
 }: Props) {
   return (
     <div className={styles.Heading__}> 
       {icon && iconType === "before" ? <> </> : null}
-      <NestedComponent headingTag={headLevel} headingText={text} />
+      <NestedComponent headingTag={headLevel} headingText={text} className={className} />
       {icon && iconType === "after" ? <> </> : null}
     </div>
   );
