@@ -10,7 +10,7 @@
     z-index: -1;
   }
 
-  &__MainHeading {
+  &__mainHeading {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -19,6 +19,12 @@
     font-weight: 700;
     color: #fff;
     text-align: center;
+    color: white;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  &__mainLeadText {
+    margin-top: 4 * $service-size;
   }
 
   // &__mainLogo {
