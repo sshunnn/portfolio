@@ -1,0 +1,32 @@
+@use "../../styles/variables.scss" as *;
+
+.Top {
+  &__imageWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 600px; /* 画像の高さに合わせて調整 */
+    z-index: -1;
+  }
+
+  &__mainHeading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: $service-font-size-mf;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+  }
+
+  &__mainLeadText {
+    margin-top: 4 * $service-size;
+  }
+
+  // &__mainLogo {
+  // }
+}
