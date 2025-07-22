@@ -31,7 +31,7 @@ export default function HomePage({ headerTitle, headerDescription, contentItems 
           <p className={styles.Top__mainLeadText}>{headerDescription}</p>
         </div>
       </div>
-      <main>
+      <div className={styles.MainContent__wrapper}>
         {contentItems.map((item) => (
           <ContentCard 
             key={item.id} 
@@ -40,7 +40,7 @@ export default function HomePage({ headerTitle, headerDescription, contentItems 
             imageType={item.type}
           />
         ))}
-      </main>
+      </div>
     </>
   );
 }

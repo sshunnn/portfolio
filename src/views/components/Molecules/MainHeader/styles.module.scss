@@ -3,38 +3,42 @@
 .MainHeader {
   // globalsに持つか検討必要
   $service-full-wide: 1040px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 1000;
-  width: $service-full-wide;
-  background-color: rgb(255, 255, 255, 0.1);
-  margin: $service-size * 6 auto;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  padding: $service-size * 3 0;
 
   &__wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 $service-size * 4;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   &__navigationWrapper {
     display: flex;
-    margin-left: 300px;
     justify-content: center;
     align-items: center;
+    gap: $service-size * 14;
   }
 
   &__siteName {
     font-size: $service-font-size-xl;
     font-weight: bold;
-    margin-left: $service-size * 6;
     text-shadow: $service-size * 2 $service-size 0 rgba(255, 163, 82, 0.3);
   }
 
   &__headerLink {
     font-size: $service-font-size-mf;
     font-weight: bold;
-    margin-left: $service-size * 14;
 
     &:hover,
     &:visited,
