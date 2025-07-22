@@ -16,7 +16,7 @@ export default function HomePage({ headerTitle, headerDescription, contentItems 
     <>
       <div className={styles.Top__imageWrapper}>
         <Image
-          src="/background/headerImage.png"
+          src="/backGround/headerImage.png"
           alt="Header Image"
           width={1920}
           height={600}
