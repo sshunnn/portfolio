@@ -2,12 +2,59 @@
 
 .ContentCard {
   &__wrapper {
-    // background-color: $service-bg-color-red;
-    background-image: url("/public/Logo/contentsCard.jpeg");
-    background-size: cover; /* 画像をコンテナに合わせて拡大縮小 */
-    background-position: center; /* 画像を中央に配置 */
+    position: relative;
     border-radius: $service-size * 4;
-    width: 280px;
-    height: 365px;
+    width: 320px;
+    height: 280px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  &__content {
+    padding: $service-size * 6;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+  
+  &__title {
+    font-size: $service-font-size-xl;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: $service-size * 4;
+    line-height: 1.4;
+  }
+  
+  &__description {
+    font-size: $service-font-size-sm;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: $service-size * 4;
+  }
+  
+  &__imageWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+    
+    img {
+      object-fit: cover;
+    }
   }
 }

@@ -50,10 +50,11 @@
 .MainContent {
   &__wrapper {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: $service-size * 4; /* アイテム間のスペース */
-    padding: $service-size * 4; /* コンテナのパディング */
+    align-items: center;
+    padding: $service-size * 8 $service-size * 4;
     margin-top: 672px; /* ヘッダー画像の高さ(600px) + ヘッダーの高さ(72px)分マージンを追加 */
+    min-height: 500px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   }
 }

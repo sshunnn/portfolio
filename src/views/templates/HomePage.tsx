@@ -1,6 +1,6 @@
 // src/views/templates/HomePage.tsx
 import { ContentItem } from "@/models/contentModel";
-import ContentCard from "@/views/components/Molecules/ContentCard";
+import ContentCarousel from "@/views/components/Organisms/ContentCarousel";
 import ContentHeading from "@/views/components/Molecules/ContentHeading";
 import Image from "next/image";
 import styles from "./HomePage.module.scss";
@@ -32,14 +32,7 @@ export default function HomePage({ headerTitle, headerDescription, contentItems 
         </div>
       </div>
       <div className={styles.MainContent__wrapper}>
-        {contentItems.map((item) => (
-          <ContentCard 
-            key={item.id} 
-            title={item.title} 
-            description={item.description} 
-            imageType={item.type}
-          />
-        ))}
+        <ContentCarousel contentItems={contentItems} />
       </div>
     </>
   );
