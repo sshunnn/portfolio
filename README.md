@@ -1,5 +1,8 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Portfolio Website
+Updated: 2025年7月22日
+
 ## Getting Started
 
 First, run the development server:
