@@ -1,12 +1,14 @@
 @use "../../styles/variables.scss" as *;
 
 .MainHeader {
+  // globalsに持つか検討必要
+  $service-full-wide: 1040px;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   top: 0;
   z-index: 1000;
-  width: 1040px; // TODO：コンテンツの最大幅を決めててglobalに持ちたい。
+  width: $service-full-wide;
   background-color: rgb(255, 255, 255, 0.1);
   margin: $service-size * 6 auto;
 
@@ -26,7 +28,7 @@
     font-size: $service-font-size-xl;
     font-weight: bold;
     margin-left: $service-size * 6;
-    text-shadow: 7px 4px 0 rgba(255, 163, 82, 0.3);
+    text-shadow: $service-size * 2 $service-size 0 rgba(255, 163, 82, 0.3);
   }
 
   &__headerLink {
@@ -34,9 +36,11 @@
     font-weight: bold;
     margin-left: $service-size * 14;
 
-    &:hover, &:visited, &:visited:hover {
-      color: black; // TODO：varibalesを使う
-      opacity: 0.75;
+    &:hover,
+    &:visited,
+    &:visited:hover {
+      color: $service-bg-color-gray;
+      opacity: $service-default-opacity;
     }
   }
 }
