@@ -12,5 +12,40 @@ jobs:
       - name: Send Discord Notification
         run: |
           curl -H "Content-Type: application/json" \
-               -d "{\"content\": \"\`${{ github.actor }}\`が、ポートフォリオを更新したよ！！コミットメッセージ：${{ github.event.head_commit.message }}branch-name: \`${{ github.ref_name }}\`\"}" \
+               -d "{
+                 \"embeds\": [
+                   {
+                     \"title\": \"🚀 ポートフォリオがデプロイされました！\",
+                     \"description\": \"新しい変更がVercelにデプロイされました。\",
+                     \"color\": 5814783,
+                     \"fields\": [
+                       {
+                         \"name\": \"👤 更新者\",
+                         \"value\": \"\`${{ github.actor }}\`\",
+                         \"inline\": true
+                       },
+                       {
+                         \"name\": \"🌿 ブランチ\",
+                         \"value\": \"\`${{ github.ref_name }}\`\",
+                         \"inline\": true
+                       },
+                       {
+                         \"name\": \"📝 コミットメッセージ\",
+                         \"value\": \"${{ github.event.head_commit.message }}\",
+                         \"inline\": false
+                       },
+                       {
+                         \"name\": \"🔗 デプロイURL\",
+                         \"value\": \"[ポートフォリオを見る](https://portfolio-flax-five-63.vercel.app/)\",
+                         \"inline\": false
+                       }
+                     ],
+                     \"timestamp\": \"${{ github.event.head_commit.timestamp }}\",
+                     \"footer\": {
+                       \"text\": \"GitHub Actions\",
+                       \"icon_url\": \"https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png\"
+                     }
+                   }
+                 ]
+               }" \
                ${{ secrets.DISCORD_WEBHOOK_URL }}
