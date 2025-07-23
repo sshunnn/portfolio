@@ -56,7 +56,7 @@ export default function ContentCarousel({ contentItems }: ContentCarouselProps) 
   useEffect(() => {
     if (carouselRef.current) {
       const container = carouselRef.current;
-      const cardWidth = 330; // カード幅（270px）+ gap（60px）
+      const cardWidth = 380; // 新しいカード幅（320px）+ gap（60px）に調整
       const containerWidth = container.offsetWidth;
       
       // 中央配置のための計算

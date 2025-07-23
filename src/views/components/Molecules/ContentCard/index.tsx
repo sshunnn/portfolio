@@ -38,16 +38,41 @@ export default function ContentCard({ item }: ContentCardProps) {
         }
       }}
     >
+      {/* 背景装飾 */}
+      <div className={styles.contentCard__background}>
+        <div className={styles.contentCard__pattern}></div>
+      </div>
+      
+      {/* メインコンテンツ */}
       <div className={styles.contentCard__content}>
-        <h3 className={styles.contentCard__title}>{item.title || 'タイトルなし'}</h3>
-        <p className={styles.contentCard__description}>{item.description || '説明なし'}</p>
+        <div className={styles.contentCard__header}>
+          <div className={styles.contentCard__badge}>
+            {cardType === 'rock' ? '🚀 プロジェクト' : '💡 ナレッジ'}
+          </div>
+          <div className={styles.contentCard__type}>
+            {cardType}
+          </div>
+        </div>
+        
+        <div className={styles.contentCard__body}>
+          <h3 className={styles.contentCard__title}>{item.title || 'タイトルなし'}</h3>
+          <p className={styles.contentCard__description}>{item.description || '説明なし'}</p>
+        </div>
+        
         {item.link && (
-          <div className={styles.contentCard__linkIndicator}>
-            <span>詳しく見る →</span>
+          <div className={styles.contentCard__footer}>
+            <div className={styles.contentCard__linkIndicator}>
+              <span>詳しく見る</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
           </div>
         )}
       </div>
-      <div className={styles.contentCard__overlay}></div>
+      
+      {/* グロー効果 */}
+      <div className={styles.contentCard__glow}></div>
     </div>
   );
 }

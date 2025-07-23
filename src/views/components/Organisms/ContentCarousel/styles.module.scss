@@ -3,14 +3,20 @@
 .contentCarousel {
   width: 100%;
   position: relative;
-  padding: $service-size * 8 $service-size * 4;
+  padding: $service-size * 8 $service-size * 4; // パディングを適切なサイズに調整
+  overflow: visible; // カルーセル全体でオーバーフローを許可
+  margin: $service-size * 6 0; // 上下のマージンを適切なサイズに調整
 
   &__wrapper {
     position: relative;
     display: flex;
     align-items: center;
     gap: $service-size * 4;
-    overflow: hidden; // カードの表示領域を制限
+    overflow: visible; // 強調表示の丸みが見えるように変更
+    padding: $service-size * 4 0; // パディングを調整
+    min-height: 320px; // カードの拡大時に必要な最小高さ（240px * 1.05 + マージン）
+    width: 100%; // 幅を明示的に設定
+    contain: layout; // レイアウトの制御を改善
   }
 
   &__container {
@@ -21,73 +27,65 @@
     align-items: center;
     justify-content: flex-start;
     transition: transform 0.5s ease;
-    width: fit-content; // コンテンツ幅に合わせる
+    width: auto; // fit-contentから変更して、より柔軟にレイアウト
+    min-width: 100%; // 最小幅を設定
+    padding: $service-size * 6 0; // パディングを適切なサイズに調整
+    overflow: visible; // コンテナレベルでもオーバーフローを許可
+    margin: 0 auto; // 中央寄せ
+    transform-style: preserve-3d; // 3D変換の継承を保持
   }
 
   &__slide {
     flex: 0 0 auto;
     position: relative;
-    transition: all 0.5s ease;
+    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     opacity: 0.6;
-    transform: scale(0.85);
+    transform: scale(0.88);
     filter: blur(1px);
+    margin: $service-size * 4 0; // 上下にマージンを追加して拡大時のスペースを確保
 
     &--active {
       opacity: 1;
-      transform: scale(1.15);
+      transform: scale(1.05); // 拡大率を少し下げて見切れを防ぐ
       filter: blur(0);
       z-index: 10;
+      margin: 0; // アクティブ時はマージンをリセットして最大限に拡大
       
-      // カード自体に統合されたグロー効果
+      // 新しいカードデザインに合わせた強調効果
       .contentCard {
-        box-shadow: 
-          0 20px 60px rgba(102, 126, 234, 0.4),
-          0 0 40px rgba(102, 126, 234, 0.3),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        
-        // より自然な背景のグラデーション強調
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(
-            135deg, 
-            rgba(255, 255, 255, 0.1) 0%,
-            transparent 50%,
-            rgba(255, 255, 255, 0.05) 100%
-          );
-          border-radius: 15px;
-          pointer-events: none;
-          z-index: 1;
+        &__glow {
+          opacity: 1;
+          transform: scale(1.02);
+          animation: modernGlow 3s ease-in-out infinite alternate;
         }
         
-        // パルス効果をカード内に統合
-        &::after {
-          content: '';
-          position: absolute;
-          top: -1px;
-          left: -1px;
-          right: -1px;
-          bottom: -1px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          border-radius: 16px;
-          z-index: -1;
-          opacity: 0.6;
-          animation: cardPulse 2s ease-in-out infinite alternate;
+        // より自然で美しいシャドウ効果
+        box-shadow: 
+          0 32px 80px rgba(0, 0, 0, 0.15),
+          0 16px 40px rgba(0, 0, 0, 0.08),
+          0 8px 20px rgba(0, 0, 0, 0.04);
+        
+        // カード自体の境界線も強調
+        border-color: rgba(255, 255, 255, 0.3);
+        
+        // 内容の視認性を向上
+        .contentCard__content {
+          transform: translateZ(0); // ハードウェアアクセラレーション
         }
       }
     }
 
     // ホバー時の効果（非選択カード用）
     &:not(&--active):hover {
-      opacity: 0.8;
+      opacity: 0.75;
       transform: scale(0.9);
       filter: blur(0.5px);
+      
+      .contentCard {
+        box-shadow: 
+          0 15px 50px rgba(99, 102, 241, 0.1),
+          0 6px 20px rgba(0, 0, 0, 0.08);
+      }
     }
   }
 
@@ -95,24 +93,24 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 54px;
-    height: 54px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: none;
     background: rgba(255, 255, 255, 0.95);
-    color: #667eea;
+    color: #6366f1;
     cursor: pointer;
     z-index: 20;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     box-shadow: 
-      0 4px 20px rgba(0, 0, 0, 0.1),
-      0 2px 8px rgba(0, 0, 0, 0.05);
-    backdrop-filter: blur(10px);
+      0 6px 25px rgba(0, 0, 0, 0.08),
+      0 3px 12px rgba(0, 0, 0, 0.04);
+    backdrop-filter: blur(20px);
     display: flex;
     align-items: center;
     justify-content: center;
     
-    // ホバー時の美しいグラデーション背景
+    // モダンなグラデーション背景
     &::before {
       content: '';
       position: absolute;
@@ -120,23 +118,27 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, 
+        #6366f1 0%, 
+        #8b45db 50%,
+        #a527b0 100%
+      );
       border-radius: 50%;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
       z-index: -1;
     }
 
     svg {
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+      transition: all 0.4s ease;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
     }
 
     &:hover:not(:disabled) {
-      transform: translateY(-50%) scale(1.1);
+      transform: translateY(-50%) scale(1.12);
       box-shadow: 
-        0 8px 30px rgba(102, 126, 234, 0.3),
-        0 4px 15px rgba(0, 0, 0, 0.1);
+        0 12px 40px rgba(99, 102, 241, 0.25),
+        0 6px 20px rgba(0, 0, 0, 0.08);
       color: white;
       
       &::before {
@@ -144,14 +146,14 @@
       }
       
       svg {
-        transform: scale(1.1);
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        transform: scale(1.15);
+        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
       }
     }
 
     &:active:not(:disabled) {
-      transform: translateY(-50%) scale(0.95);
-      transition: transform 0.1s ease;
+      transform: translateY(-50%) scale(0.98);
+      transition: transform 0.15s ease;
     }
 
     &:disabled {
@@ -161,8 +163,8 @@
       &:hover {
         transform: translateY(-50%);
         box-shadow: 
-          0 4px 20px rgba(0, 0, 0, 0.1),
-          0 2px 8px rgba(0, 0, 0, 0.05);
+          0 6px 25px rgba(0, 0, 0, 0.08),
+          0 3px 12px rgba(0, 0, 0, 0.04);
       }
     }
 
@@ -187,13 +189,13 @@
     height: 12px;
     border-radius: 50%;
     border: none;
-    background: rgba(102, 126, 234, 0.3);
+    background: rgba(99, 102, 241, 0.25);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
     &:hover:not(:disabled) {
-      background: rgba(102, 126, 234, 0.6);
-      transform: scale(1.2);
+      background: rgba(99, 102, 241, 0.5);
+      transform: scale(1.3);
     }
 
     &:disabled {
@@ -201,10 +203,14 @@
     }
 
     &--active {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      transform: scale(1.4);
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
-      animation: dotPulse 1.5s ease-in-out infinite alternate;
+      background: linear-gradient(135deg, 
+        #6366f1 0%, 
+        #8b45db 50%,
+        #a527b0 100%
+      );
+      transform: scale(1.5);
+      box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
+      animation: modernDotPulse 2s ease-in-out infinite alternate;
     }
   }
 
@@ -216,27 +222,29 @@
   }
 
   &__playButton {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 2px solid rgba(102, 126, 234, 0.3);
+    border: 2px solid rgba(99, 102, 241, 0.3);
     background: rgba(255, 255, 255, 0.9);
-    color: #667eea;
+    color: #6366f1;
     font-size: $service-font-size-sm;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+    transition: all 0.4s ease;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 
     &:hover {
-      background: rgba(102, 126, 234, 0.1);
-      border-color: rgba(102, 126, 234, 0.6);
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.6);
       transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
     }
 
     &--playing {
-      background: rgba(102, 126, 234, 0.1);
-      border-color: rgba(102, 126, 234, 0.5);
-      animation: playingPulse 2s ease-in-out infinite;
+      background: rgba(99, 102, 241, 0.1);
+      border-color: rgba(99, 102, 241, 0.5);
+      animation: modernPlayingPulse 2.5s ease-in-out infinite;
     }
   }
 
@@ -252,35 +260,49 @@
 }
 
 // アニメーション定義
-@keyframes cardPulse {
+@keyframes modernGlow {
   0% {
-    opacity: 0.3;
+    opacity: 0.8;
     transform: scale(1);
   }
   100% {
-    opacity: 0.6;
-    transform: scale(1.01);
+    opacity: 1;
+    transform: scale(1.005);
   }
 }
 
-@keyframes dotPulse {
+@keyframes elegantPulse {
   0% {
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+    opacity: 0.4;
+    transform: scale(1);
   }
   100% {
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
+    opacity: 0.7;
+    transform: scale(1.005);
   }
 }
 
-@keyframes playingPulse {
+@keyframes modernDotPulse {
   0% {
-    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
+  }
+  100% {
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.6);
+  }
+}
+
+@keyframes modernPlayingPulse {
+  0% {
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   }
   50% {
-    border-color: rgba(102, 126, 234, 0.7);
+    border-color: rgba(99, 102, 241, 0.7);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
   }
   100% {
-    border-color: rgba(102, 126, 234, 0.3);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   }
 }
 
@@ -291,22 +313,24 @@
 
     &__wrapper {
       gap: $service-size * 2;
+      padding: $service-size * 3 0;
+      min-height: 280px; // タブレット用の適切な最小高さ
     }
 
     &__container {
       gap: $service-size * 4;
-      padding: $service-size * 4 0; // モバイルでもパディング調整
+      padding: $service-size * 4 0;
     }
 
     &__slide {
-      transform: scale(0.8);
+      transform: scale(0.82);
 
       &--active {
-        transform: scale(1.05);
+        transform: scale(1.02);
       }
 
       &:not(&--active):hover {
-        transform: scale(0.85);
+        transform: scale(0.86);
       }
     }
 
@@ -320,11 +344,11 @@
       }
 
       &--prev {
-        left: $service-size * 2; // モバイルでのボタン位置調整
+        left: $service-size * 2;
       }
 
       &--next {
-        right: $service-size * 2; // モバイルでのボタン位置調整
+        right: $service-size * 2;
       }
     }
 
@@ -351,21 +375,29 @@
 
 @media (max-width: 480px) {
   .contentCarousel {
-    padding: $service-size * 4 $service-size;
+    padding: $service-size * 6 $service-size; // モバイル用のパディング調整
+
+    &__wrapper {
+      gap: $service-size;
+      padding: $service-size * 3 0; // モバイル用のパディング調整
+      min-height: 250px; // モバイル用の適切な最小高さ
+    }
 
     &__container {
-      padding: $service-size * 3 0; // 小画面でのパディング調整
+      padding: $service-size * 4 0; // モバイル用のパディング調整
     }
 
     &__slide {
-      transform: scale(0.75);
+      transform: scale(0.78);
+      margin: $service-size * 2 0; // モバイルでも上下マージンを確保
 
       &--active {
-        transform: scale(1);
+        transform: scale(0.95); // モバイルでの拡大率を調整
+        margin: 0;
       }
 
       &:not(&--active):hover {
-        transform: scale(0.8);
+        transform: scale(0.82);
       }
     }
 
@@ -379,16 +411,12 @@
       }
 
       &--prev {
-        left: $service-size; // 小画面でのボタン位置調整
+        left: $service-size;
       }
 
       &--next {
-        right: $service-size; // 小画面でのボタン位置調整
+        right: $service-size;
       }
-    }
-
-    &__wrapper {
-      gap: $service-size;
     }
 
     &__controls {
