@@ -1,28 +1,53 @@
+"use client";
+
+import { ContentItem } from "@/models/contentModel";
+import { useRouter } from "next/navigation";
 import styles from "./styles.module.scss";
-import Image from 'next/image';
 
-export type Props = {
-  title: string | null;
-  description: string;
-  imageType?: "rock" | "water";
-  colorSetting?: string | null;
-};
+interface ContentCardProps {
+  item: ContentItem;
+}
 
-export default function ContentCard(props: Props) {
+export default function ContentCard({ item }: ContentCardProps) {
+  const router = useRouter();
+
+  // itemが存在しない場合の早期リターン
+  if (!item) {
+    return null;
+  }
+
+  const handleCardClick = () => {
+    if (item.link) {
+      router.push(item.link);
+    }
+  };
+
+  // typeが存在しない場合のデフォルト値を設定
+  const cardType = item.type || 'rock';
+
   return (
-      <div className={styles.ContentCard__wrapper}>
-        <div className={styles.ContentCard__content}>
-          <h1 className={styles.ContentCard__title}>{props.title}</h1>
-          <p className={styles.ContentCard__description}>{props.description}</p>
-        </div>
-        <div className={styles.ContentCard__imageWrapper}>
-          <Image
-            src={props.imageType == "rock" ? `/Logo/contentsCard.png`: `/Logo/${props.imageType}.png`}
-            alt="Background Image"
-            layout="fill"
-            objectFit="cover"
-          />
-        </div>
+    <div 
+      className={`${styles.contentCard} ${styles[`contentCard--${cardType}`]}`}
+      onClick={handleCardClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+    >
+      <div className={styles.contentCard__content}>
+        <h3 className={styles.contentCard__title}>{item.title || 'タイトルなし'}</h3>
+        <p className={styles.contentCard__description}>{item.description || '説明なし'}</p>
+        {item.link && (
+          <div className={styles.contentCard__linkIndicator}>
+            <span>詳しく見る →</span>
+          </div>
+        )}
       </div>
+      <div className={styles.contentCard__overlay}></div>
+    </div>
   );
 }

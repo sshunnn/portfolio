@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from "react";
 import { ContentItem } from "@/models/contentModel";
 import ContentCard from "@/views/components/Molecules/ContentCard";
 import styles from "./styles.module.scss";
@@ -11,86 +11,220 @@ interface ContentCarouselProps {
 
 export default function ContentCarousel({ contentItems }: ContentCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // 自動スクロール
+  // contentItemsが存在しない、または空の場合の処理
+  if (!contentItems || contentItems.length === 0) {
+    return (
+      <div className={styles.contentCarousel}>
+        <p className={styles.contentCarousel__noContent}>
+          表示するコンテンツがありません
+        </p>
+      </div>
+    );
+  }
+
+  // 自動再生の設定
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (isAutoPlaying && contentItems.length > 1) {
+      intervalRef.current = setInterval(() => {
+        setCurrentIndex(prev => {
+          if (prev >= contentItems.length - 1) {
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 4000);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    }
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => 
-        prevIndex === contentItems.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 4000); // 4秒ごとに切り替え
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isAutoPlaying, contentItems.length]);
 
-    return () => clearInterval(interval);
-  }, [contentItems.length, isAutoPlay]);
+  // transformベースのアニメーション処理
+  useEffect(() => {
+    if (carouselRef.current) {
+      const container = carouselRef.current;
+      const cardWidth = 330; // カード幅（270px）+ gap（60px）
+      const containerWidth = container.offsetWidth;
+      
+      // 中央配置のための計算
+      const centerOffset = (containerWidth - cardWidth) / 2;
+      const translateX = centerOffset - (currentIndex * cardWidth);
+      
+      container.style.transform = `translateX(${translateX}px)`;
+    }
+  }, [currentIndex]);
 
-  const goToSlide = (index: number) => {
+  // シンプルなスライド処理
+  const handleNextSlide = () => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setCurrentIndex(prev => {
+      const nextIndex = prev >= contentItems.length - 1 ? 0 : prev + 1;
+      return nextIndex;
+    });
+    
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const handlePrevSlide = () => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setCurrentIndex(prev => {
+      const prevIndex = prev <= 0 ? contentItems.length - 1 : prev - 1;
+      return prevIndex;
+    });
+    
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const handlePrevClick = () => {
+    setIsAutoPlaying(false);
+    handlePrevSlide();
+  };
+
+  const handleNextClick = () => {
+    setIsAutoPlaying(false);
+    handleNextSlide();
+  };
+
+  const handleDotClick = (index: number) => {
+    if (isTransitioning) return;
+    
+    setIsAutoPlaying(false);
+    setIsTransitioning(true);
     setCurrentIndex(index);
+    setTimeout(() => setIsTransitioning(false), 500);
   };
 
-  const goToPrevious = () => {
-    setCurrentIndex(currentIndex === 0 ? contentItems.length - 1 : currentIndex - 1);
+  const handleMouseEnter = () => {
+    setIsAutoPlaying(false);
   };
 
-  const goToNext = () => {
-    setCurrentIndex(currentIndex === contentItems.length - 1 ? 0 : currentIndex + 1);
+  const handleMouseLeave = () => {
+    setIsAutoPlaying(true);
   };
 
   return (
     <div 
-      className={styles.carousel}
-      onMouseEnter={() => setIsAutoPlay(false)}
-      onMouseLeave={() => setIsAutoPlay(true)}
+      className={styles.contentCarousel}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className={styles.carousel__container}>
-        <div 
-          className={styles.carousel__track}
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+      <div className={styles.contentCarousel__wrapper}>
+        {/* 前へボタン */}
+        <button 
+          className={`${styles.contentCarousel__navButton} ${styles['contentCarousel__navButton--prev']}`}
+          onClick={handlePrevClick}
+          aria-label="前のコンテンツ"
+          disabled={isTransitioning}
         >
-          {contentItems.map((item) => (
-            <div key={item.id} className={styles.carousel__slide}>
-              <ContentCard 
-                title={item.title} 
-                description={item.description} 
-                imageType={item.type}
-              />
-            </div>
-          ))}
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M15 18L9 12L15 6" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+
+        {/* カルーセルコンテナ */}
+        <div 
+          ref={carouselRef}
+          className={styles.contentCarousel__container}
+        >
+          {contentItems.map((item, index) => {
+            if (!item || !item.id) {
+              return null;
+            }
+            
+            const isActive = index === currentIndex;
+            
+            return (
+              <div 
+                key={item.id}
+                className={`${styles.contentCarousel__slide} ${
+                  isActive ? styles['contentCarousel__slide--active'] : ''
+                }`}
+              >
+                <ContentCard item={item} />
+              </div>
+            );
+          })}
         </div>
+
+        {/* 次へボタン */}
+        <button 
+          className={`${styles.contentCarousel__navButton} ${styles['contentCarousel__navButton--next']}`}
+          onClick={handleNextClick}
+          aria-label="次のコンテンツ"
+          disabled={isTransitioning}
+        >
+          <svg 
+            width="20" 
+            height="20" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path 
+              d="M9 18L15 12L9 6" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              strokeLinecap="round" 
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
 
-      {/* ナビゲーションボタン */}
-      <button 
-        className={`${styles.carousel__button} ${styles.carousel__buttonPrev}`}
-        onClick={goToPrevious}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-      
-      <button 
-        className={`${styles.carousel__button} ${styles.carousel__buttonNext}`}
-        onClick={goToNext}
-      >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-          <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </button>
-
-      {/* インジケーター */}
-      <div className={styles.carousel__indicators}>
+      {/* インジケーター（元のアイテム数のみ） */}
+      <div className={styles.contentCarousel__indicators}>
         {contentItems.map((_, index) => (
           <button
             key={index}
-            className={`${styles.carousel__indicator} ${
-              index === currentIndex ? styles.carousel__indicatorActive : ''
+            className={`${styles.contentCarousel__dot} ${
+              index === currentIndex ? styles['contentCarousel__dot--active'] : ''
             }`}
-            onClick={() => goToSlide(index)}
+            onClick={() => handleDotClick(index)}
+            aria-label={`${index + 1}番目のコンテンツ`}
+            disabled={isTransitioning}
           />
         ))}
+      </div>
+
+      {/* 自動再生状態表示 */}
+      <div className={styles.contentCarousel__controls}>
+        <button
+          className={`${styles.contentCarousel__playButton} ${
+            isAutoPlaying ? styles['contentCarousel__playButton--playing'] : ''
+          }`}
+          onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+          aria-label={isAutoPlaying ? '自動再生を停止' : '自動再生を開始'}
+        >
+          {isAutoPlaying ? '⏸' : '▶'}
+        </button>
       </div>
     </div>
   );

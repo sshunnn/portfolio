@@ -1,141 +1,403 @@
 @use "../../../../styles/variables.scss" as *;
 
-.carousel {
-  position: relative;
+.contentCarousel {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: $service-size * 6;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  
-  &__container {
+  position: relative;
+  padding: $service-size * 8 $service-size * 4;
+
+  &__wrapper {
     position: relative;
-    width: 100%;
-    height: 400px;
-    overflow: hidden;
-  }
-  
-  &__track {
     display: flex;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  &__slide {
-    flex: 0 0 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: $service-size * 6;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    gap: $service-size * 4;
+    overflow: hidden; // カードの表示領域を制限
+  }
+
+  &__container {
+    display: flex;
+    gap: $service-size * 6;
+    flex: 1;
     position: relative;
-    
-    &:nth-child(even) {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    align-items: center;
+    justify-content: flex-start;
+    transition: transform 0.5s ease;
+    width: fit-content; // コンテンツ幅に合わせる
+  }
+
+  &__slide {
+    flex: 0 0 auto;
+    position: relative;
+    transition: all 0.5s ease;
+    opacity: 0.6;
+    transform: scale(0.85);
+    filter: blur(1px);
+
+    &--active {
+      opacity: 1;
+      transform: scale(1.15);
+      filter: blur(0);
+      z-index: 10;
+      
+      // カード自体に統合されたグロー効果
+      .contentCard {
+        box-shadow: 
+          0 20px 60px rgba(102, 126, 234, 0.4),
+          0 0 40px rgba(102, 126, 234, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        
+        // より自然な背景のグラデーション強調
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            135deg, 
+            rgba(255, 255, 255, 0.1) 0%,
+            transparent 50%,
+            rgba(255, 255, 255, 0.05) 100%
+          );
+          border-radius: 15px;
+          pointer-events: none;
+          z-index: 1;
+        }
+        
+        // パルス効果をカード内に統合
+        &::after {
+          content: '';
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          right: -1px;
+          bottom: -1px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 16px;
+          z-index: -1;
+          opacity: 0.6;
+          animation: cardPulse 2s ease-in-out infinite alternate;
+        }
+      }
     }
-    
-    &:nth-child(3n) {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    }
-    
-    &:nth-child(4n) {
-      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-    }
-    
-    &:nth-child(5n) {
-      background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+
+    // ホバー時の効果（非選択カード用）
+    &:not(&--active):hover {
+      opacity: 0.8;
+      transform: scale(0.9);
+      filter: blur(0.5px);
     }
   }
-  
-  &__button {
+
+  &__navButton {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
+    border: none;
+    background: rgba(255, 255, 255, 0.95);
+    color: #667eea;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.1),
+      0 2px 8px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
     
-    &:hover {
-      background: rgba(255, 255, 255, 1);
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    // ホバー時の美しいグラデーション背景
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
     }
-    
-    &Prev {
+
+    svg {
+      transition: all 0.3s ease;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    }
+
+    &:hover:not(:disabled) {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 
+        0 8px 30px rgba(102, 126, 234, 0.3),
+        0 4px 15px rgba(0, 0, 0, 0.1);
+      color: white;
+      
+      &::before {
+        opacity: 1;
+      }
+      
+      svg {
+        transform: scale(1.1);
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+      }
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(-50%) scale(0.95);
+      transition: transform 0.1s ease;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      
+      &:hover {
+        transform: translateY(-50%);
+        box-shadow: 
+          0 4px 20px rgba(0, 0, 0, 0.1),
+          0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+    }
+
+    &--prev {
       left: $service-size * 4;
     }
-    
-    &Next {
+
+    &--next {
       right: $service-size * 4;
     }
-    
-    svg {
-      color: #333;
-    }
   }
-  
+
   &__indicators {
-    position: absolute;
-    bottom: $service-size * 4;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
+    justify-content: center;
     gap: $service-size * 2;
-    z-index: 10;
+    margin-top: $service-size * 8;
   }
-  
-  &__indicator {
+
+  &__dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     border: none;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(102, 126, 234, 0.3);
     cursor: pointer;
     transition: all 0.3s ease;
-    backdrop-filter: blur(5px);
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.8);
+
+    &:hover:not(:disabled) {
+      background: rgba(102, 126, 234, 0.6);
       transform: scale(1.2);
     }
-    
-    &Active {
-      background: rgba(255, 255, 255, 1);
-      transform: scale(1.3);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+    &:disabled {
+      cursor: not-allowed;
     }
+
+    &--active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: scale(1.4);
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+      animation: dotPulse 1.5s ease-in-out infinite alternate;
+    }
+  }
+
+  &__controls {
+    position: absolute;
+    top: $service-size * 4;
+    right: $service-size * 4;
+    z-index: 15;
+  }
+
+  &__playButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(102, 126, 234, 0.3);
+    background: rgba(255, 255, 255, 0.9);
+    color: #667eea;
+    font-size: $service-font-size-sm;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.6);
+      transform: scale(1.1);
+    }
+
+    &--playing {
+      background: rgba(102, 126, 234, 0.1);
+      border-color: rgba(102, 126, 234, 0.5);
+      animation: playingPulse 2s ease-in-out infinite;
+    }
+  }
+
+  &__noContent {
+    text-align: center;
+    padding: $service-size * 12;
+    font-size: $service-font-size-l;
+    color: #666;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// アニメーション定義
+@keyframes cardPulse {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.6;
+    transform: scale(1.01);
+  }
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.6);
+  }
+}
+
+@keyframes playingPulse {
+  0% {
+    border-color: rgba(102, 126, 234, 0.3);
+  }
+  50% {
+    border-color: rgba(102, 126, 234, 0.7);
+  }
+  100% {
+    border-color: rgba(102, 126, 234, 0.3);
   }
 }
 
 // レスポンシブ対応
 @media (max-width: 768px) {
-  .carousel {
-    &__button {
-      width: 40px;
-      height: 40px;
-      
-      &Prev {
-        left: $service-size * 2;
+  .contentCarousel {
+    padding: $service-size * 6 $service-size * 2;
+
+    &__wrapper {
+      gap: $service-size * 2;
+    }
+
+    &__container {
+      gap: $service-size * 4;
+      padding: $service-size * 4 0; // モバイルでもパディング調整
+    }
+
+    &__slide {
+      transform: scale(0.8);
+
+      &--active {
+        transform: scale(1.05);
       }
-      
-      &Next {
-        right: $service-size * 2;
+
+      &:not(&--active):hover {
+        transform: scale(0.85);
       }
     }
-    
+
+    &__navButton {
+      width: 40px;
+      height: 40px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      &--prev {
+        left: $service-size * 2; // モバイルでのボタン位置調整
+      }
+
+      &--next {
+        right: $service-size * 2; // モバイルでのボタン位置調整
+      }
+    }
+
+    &__indicators {
+      margin-top: $service-size * 6;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+
+      &--active {
+        transform: scale(1.3);
+      }
+    }
+
+    &__playButton {
+      width: 35px;
+      height: 35px;
+      font-size: $service-font-size-sm;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .contentCarousel {
+    padding: $service-size * 4 $service-size;
+
+    &__container {
+      padding: $service-size * 3 0; // 小画面でのパディング調整
+    }
+
     &__slide {
-      padding: $service-size * 4;
+      transform: scale(0.75);
+
+      &--active {
+        transform: scale(1);
+      }
+
+      &:not(&--active):hover {
+        transform: scale(0.8);
+      }
+    }
+
+    &__navButton {
+      width: 35px;
+      height: 35px;
+
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      &--prev {
+        left: $service-size; // 小画面でのボタン位置調整
+      }
+
+      &--next {
+        right: $service-size; // 小画面でのボタン位置調整
+      }
+    }
+
+    &__wrapper {
+      gap: $service-size;
+    }
+
+    &__controls {
+      top: $service-size * 2;
+      right: $service-size * 2;
+    }
+
+    &__indicators {
+      margin-top: $service-size * 4;
     }
   }
 }

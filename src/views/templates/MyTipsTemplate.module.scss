@@ -1,0 +1,136 @@
+@use "../../styles/variables.scss" as *;
+
+.myTips {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding-top: 72px; // ヘッダー分のパディング
+
+  &__header {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    padding: $service-size * 12 $service-size * 4 $service-size * 8;
+    text-align: center;
+    position: relative;
+  }
+
+  &__backButton {
+    position: absolute;
+    top: $service-size * 6;
+    left: $service-size * 4;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: $service-size * 3 $service-size * 6;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: $service-font-size-sm;
+    backdrop-filter: blur(10px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__title {
+    font-size: $service-font-size-xl;
+    font-weight: 700;
+    margin-bottom: $service-size * 4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  &__subtitle {
+    font-size: $service-font-size-l;
+    opacity: 0.9;
+    font-weight: 300;
+  }
+
+  &__content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: $service-size * 12 $service-size * 4;
+  }
+
+  &__section {
+    margin-bottom: $service-size * 16;
+  }
+
+  &__sectionTitle {
+    font-size: $service-font-size-xl;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: $service-size * 8;
+    text-align: center;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: $service-size * 6;
+  }
+
+  &__card {
+    background: white;
+    padding: $service-size * 8;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    h3 {
+      font-size: $service-font-size-l;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: $service-size * 4;
+    }
+
+    p {
+      font-size: $service-font-size-sm;
+      color: #666;
+      line-height: 1.6;
+    }
+  }
+}
+
+// レスポンシブ対応
+@media (max-width: 768px) {
+  .myTips {
+    &__header {
+      padding: $service-size * 8 $service-size * 4;
+    }
+
+    &__backButton {
+      top: $service-size * 4;
+      left: $service-size * 2;
+      padding: $service-size * 2 $service-size * 4;
+      font-size: $service-font-size-sm;
+    }
+
+    &__title {
+      font-size: $service-font-size-xl;
+    }
+
+    &__subtitle {
+      font-size: $service-font-size-mf;
+    }
+
+    &__content {
+      padding: $service-size * 8 $service-size * 2;
+    }
+
+    &__grid {
+      grid-template-columns: 1fr;
+      gap: $service-size * 4;
+    }
+
+    &__card {
+      padding: $service-size * 6;
+    }
+  }
+}
