@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Icon from "@/views/components/Atoms/Icon";
 import styles from "./MyTipsTemplate.module.scss";
 
 export default function MyTipsTemplate() {
@@ -17,7 +18,8 @@ export default function MyTipsTemplate() {
           onClick={handleBackClick}
           className={styles.myTips__backButton}
         >
-          ← 戻る
+          <Icon name="arrow-left" size={18} />
+          戻る
         </button>
         <h1 className={styles.myTips__title}>開発 MyTips</h1>
         <p className={styles.myTips__subtitle}>

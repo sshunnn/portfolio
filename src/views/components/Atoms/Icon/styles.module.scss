@@ -1,0 +1,59 @@
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+
+  // カスタムストロークwidth対応
+  path, circle, rect, line {
+    stroke-width: var(--stroke-width, 2);
+  }
+
+  // ホバー時の効果
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  // アニメーション用のクラス
+  &--spin {
+    animation: iconSpin 1s linear infinite;
+  }
+
+  &--pulse {
+    animation: iconPulse 2s ease-in-out infinite;
+  }
+
+  &--bounce {
+    animation: iconBounce 1s ease-in-out infinite;
+  }
+}
+
+// アニメーション定義
+@keyframes iconSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes iconBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+  60% {
+    transform: translateY(-1px);
+  }
+}

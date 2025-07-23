@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { ContentItem } from "@/models/contentModel";
 import ContentCard from "@/views/components/Molecules/ContentCard";
+import Icon from "@/views/components/Atoms/Icon";
 import styles from "./styles.module.scss";
 
 interface ContentCarouselProps {
@@ -132,21 +133,7 @@ export default function ContentCarousel({ contentItems }: ContentCarouselProps) 
           aria-label="前のコンテンツ"
           disabled={isTransitioning}
         >
-          <svg 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              d="M15 18L9 12L15 6" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-          </svg>
+          <Icon name="chevron-left" size={20} />
         </button>
 
         {/* カルーセルコンテナ */}
@@ -181,21 +168,7 @@ export default function ContentCarousel({ contentItems }: ContentCarouselProps) 
           aria-label="次のコンテンツ"
           disabled={isTransitioning}
         >
-          <svg 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path 
-              d="M9 18L15 12L9 6" 
-              stroke="currentColor" 
-              strokeWidth="2.5" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-            />
-          </svg>
+          <Icon name="chevron-right" size={20} />
         </button>
       </div>
 
@@ -223,7 +196,7 @@ export default function ContentCarousel({ contentItems }: ContentCarouselProps) 
           onClick={() => setIsAutoPlaying(!isAutoPlaying)}
           aria-label={isAutoPlaying ? '自動再生を停止' : '自動再生を開始'}
         >
-          {isAutoPlaying ? '⏸' : '▶'}
+          <Icon name={isAutoPlaying ? 'pause' : 'play'} size={16} />
         </button>
       </div>
     </div>
