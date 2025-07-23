@@ -23,11 +23,21 @@ jobs:
       - name: Get Vercel deployment info
         id: vercel-info
         run: |
-          # Vercel APIを使用してデプロイメント情報を取得
-          DEPLOYMENT_URL=$(curl -s -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
-            "https://api.vercel.com/v6/deployments?projectId=${{ secrets.VERCEL_PROJECT_ID }}&limit=1" | \
-            jq -r '.deployments[0].url')
-          echo "deployment_url=https://$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          # Vercel APIを使用してプロジェクト情報とデプロイメント情報を取得
+          # プロジェクトのドメイン設定を取得
+          PROJECT_INFO=$(curl -s -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            "https://api.vercel.com/v9/projects/${{ secrets.VERCEL_PROJECT_ID }}")
+          
+          # カスタムドメインがある場合はそれを使用、なければデフォルトドメインを使用
+          CUSTOM_DOMAIN=$(echo "$PROJECT_INFO" | jq -r '.alias[0].domain // empty')
+          
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            echo "deployment_url=https://$CUSTOM_DOMAIN" >> $GITHUB_OUTPUT
+          else
+            # デフォルトのVercelドメインを使用
+            PROJECT_NAME=$(echo "$PROJECT_INFO" | jq -r '.name')
+            echo "deployment_url=https://$PROJECT_NAME.vercel.app" >> $GITHUB_OUTPUT
+          fi
         
       - name: Send Discord Notification
         run: |
