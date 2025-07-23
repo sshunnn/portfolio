@@ -2,28 +2,181 @@
 
 .Top {
   &__imageWrapper {
-    position: absolute;
-    top: 72px; /* ヘッダーの高さ分のオフセット */
+    position: relative;
+    top: 72px; 
     left: 0;
     width: 100%;
-    height: 600px; /* 画像の高さに合わせて調整 */
-    z-index: -1;
-    
-    img {
-      opacity: 0;
-      animation: fadeIn 2s ease-in-out forwards;
+    height: 600px;
+    overflow: hidden;
+    z-index: 1;
+    margin-bottom: 0;
+  }
+
+  &__backgroundImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/backGround/headerImage.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    // TODO:調整必要
+    opacity: 1.0;
+    z-index: 1;
+  }
+
+  &__animatedBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.7) 0%, rgba(118, 75, 162, 0.7) 100%);
+    z-index: 2; /* 背景画像の上に配置 */
+  }
+
+  &__gradientLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      45deg,
+      rgba(102, 126, 234, 0.6) 0%,
+      rgba(118, 75, 162, 0.6) 25%,
+      rgba(255, 154, 158, 0.6) 50%,
+      rgba(250, 208, 196, 0.6) 75%,
+      rgba(102, 126, 234, 0.6) 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientMove 8s ease infinite;
+    z-index: 3;
+  }
+
+  &__particlesContainer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  &__particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: particleFloat 10s linear infinite;
+
+    &:nth-child(3n) {
+      background: rgba(255, 255, 255, 0.4);
+      width: 8px;
+      height: 8px;
+    }
+
+    &:nth-child(5n) {
+      background: rgba(255, 255, 255, 0.6);
+      width: 4px;
+      height: 4px;
     }
   }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      filter: brightness(0.3);
-    }
-    100% {
-      opacity: 1;
-      filter: brightness(1);
-    }
+
+  &__geometricShapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  &__shape1 {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+    border-radius: 20px;
+    animation: shapeRotate 15s linear infinite;
+    transform-origin: center;
+  }
+
+  &__shape2 {
+    position: absolute;
+    top: 20%;
+    right: 15%;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.25));
+    border-radius: 50%;
+    animation: shapePulse 6s ease-in-out infinite;
+  }
+
+  &__shape3 {
+    position: absolute;
+    bottom: 30%;
+    left: 20%;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(225deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    animation: shapeFloat 8s ease-in-out infinite;
+  }
+
+  &__shape4 {
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(315deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    animation: shapeMorph 12s ease-in-out infinite;
+  }
+
+  &__wavesContainer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    z-index: 6;
+  }
+
+  &__wave1,
+  &__wave2,
+  &__wave3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 50%;
+    animation: waveMove 8s linear infinite;
+  }
+
+  &__wave2 {
+    height: 80px;
+    animation-delay: -2s;
+    animation-duration: 6s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  }
+
+  &__wave3 {
+    height: 60px;
+    animation-delay: -4s;
+    animation-duration: 10s;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
   }
 
   &__mainHeading {
@@ -31,20 +184,31 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: $service-font-size-mf;
-    font-weight: 700;
-    color: #fff;
     text-align: center;
     color: white;
-    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    backdrop-filter: blur(5px);
+    padding: $service-size * 8;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    h1 {
+      margin-bottom: $service-size * 4;
+      font-size: $service-font-size-xl;
+      font-weight: 700;
+      animation: textGlow 3s ease-in-out infinite alternate;
+    }
   }
 
   &__mainLeadText {
-    margin-top: 4 * $service-size;
+    margin-top: $service-size * 4;
+    font-size: $service-font-size-mf;
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0.95;
   }
-
-  // &__mainLogo {
-  // }
 }
 
 .MainContent {
@@ -53,8 +217,212 @@
     justify-content: center;
     align-items: center;
     padding: $service-size * 8 $service-size * 4;
-    margin-top: 672px; /* ヘッダー画像の高さ(600px) + ヘッダーの高さ(72px)分マージンを追加 */
+    margin-top: 0;
     min-height: 500px;
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    position: relative;
+    z-index: 5;
+    margin-top: 72px;
+  }
+}
+
+// アニメーション定義
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) translateX(100px);
+    opacity: 0;
+  }
+}
+
+@keyframes shapeRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shapePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes shapeFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes shapeMorph {
+  0%, 100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  25% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 100% 0% 30% 70% / 100% 60% 40% 0%;
+  }
+  75% {
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+  }
+}
+
+@keyframes waveMove {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes textGlow {
+  0% {
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    text-shadow: 3px 3px 25px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 255, 255, 0.6);
+  }
+}
+
+@media (max-width: 768px) {
+  .Top {
+    &__imageWrapper {
+      height: 500px;
+    }
+
+    &__mainHeading {
+      padding: $service-size * 6;
+
+      h1 {
+        font-size: $service-font-size-l;
+      }
+    }
+
+    &__mainLeadText {
+      font-size: $service-font-size-m;
+    }
+
+    &__shape1,
+    &__shape2,
+    &__shape3,
+    &__shape4 {
+      transform: scale(0.8);
+    }
+  }
+
+  .MainContent {
+    &__wrapper {
+      margin-top: 72px; 
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .Top {
+    &__imageWrapper {
+      height: 400px;
+    }
+
+    &__mainHeading {
+      padding: $service-size * 4;
+
+      h1 {
+        font-size: $service-font-size-mf;
+      }
+    }
+
+    &__mainLeadText {
+      font-size: $service-font-size-sm;
+    }
+  }
+
+  .MainContent {
+    &__wrapper {
+      margin-top: 72px; 
+    }
+  }
+}
+
+// レスポンシブ対応
+@media (max-width: 768px) {
+  .Top {
+    &__imageWrapper {
+      height: 500px;
+    }
+
+    &__mainHeading {
+      padding: $service-size * 6;
+
+      h1 {
+        font-size: $service-font-size-l;
+      }
+    }
+
+    &__mainLeadText {
+      font-size: $service-font-size-m;
+    }
+
+    &__shape1,
+    &__shape2,
+    &__shape3,
+    &__shape4 {
+      transform: scale(0.8);
+    }
+  }
+
+  .MainContent {
+    &__wrapper {
+      margin-top: 72px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .Top {
+    &__imageWrapper {
+      height: 400px;
+    }
+
+    &__mainHeading {
+      padding: $service-size * 4;
+
+      h1 {
+        font-size: $service-font-size-mf;
+      }
+    }
+
+    &__mainLeadText {
+      font-size: $service-font-size-sm;
+    }
+  }
+
+  .MainContent {
+    &__wrapper {
+      margin-top: 72px;
+    }
   }
 }
