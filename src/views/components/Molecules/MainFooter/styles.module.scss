@@ -1,0 +1,108 @@
+@use "../../../../styles/variables.scss" as *;
+
+.MainFooter {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  backdrop-filter: blur(10px);
+  padding: $service-size * 8 0 $service-size * 6 0;
+  margin-top: auto;
+
+  &__wrapper {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0 $service-size * 4;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: $service-size * 6;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: $service-size * 2;
+  }
+
+  &__siteName {
+    font-size: $service-font-size-xl;
+    font-weight: bold;
+    color: white;
+    text-shadow: $service-size * 2 $service-size 0 rgba(0, 0, 0, 0.3);
+  }
+
+  &__copyright {
+    font-size: $service-font-size-sm;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 400;
+  }
+
+  &__navigationWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $service-size * 8;
+  }
+
+  &__footerLink {
+    font-size: $service-font-size-mf;
+    font-weight: 500;
+    color: white;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 50%;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    &:hover {
+      color: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &:visited {
+      color: white;
+    }
+  }
+}
+
+// レスポンシブ対応
+@media (max-width: 768px) {
+  .MainFooter {
+    padding: $service-size * 6 0 $service-size * 4 0;
+
+    &__content {
+      flex-direction: column;
+      text-align: center;
+      gap: $service-size * 4;
+    }
+
+    &__navigationWrapper {
+      gap: $service-size * 6;
+    }
+
+    &__footerLink {
+      font-size: $service-font-size-sm;
+    }
+  }
+}
