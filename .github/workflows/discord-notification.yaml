@@ -9,6 +9,26 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+        
+      - name: Get Vercel deployment info
+        id: vercel-info
+        run: |
+          # Vercel APIを使用してデプロイメント情報を取得
+          DEPLOYMENT_URL=$(curl -s -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
+            "https://api.vercel.com/v6/deployments?projectId=${{ secrets.VERCEL_PROJECT_ID }}&limit=1" | \
+            jq -r '.deployments[0].url')
+          echo "deployment_url=https://$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+        
       - name: Send Discord Notification
         run: |
           curl -H "Content-Type: application/json" \
@@ -36,7 +56,7 @@ jobs:
                        },
                        {
                          \"name\": \"🔗 デプロイURL\",
-                         \"value\": \"[ポートフォリオを見る](https://portfolio-flax-five-63.vercel.app/)\",
+                         \"value\": \"[ポートフォリオを見る](${{ steps.vercel-info.outputs.deployment_url }})\",
                          \"inline\": false
                        }
                      ],
