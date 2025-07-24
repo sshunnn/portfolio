@@ -28,13 +28,15 @@ export default function RootLayout({
         {isMounted && isLoading && (
           <LoadingScreen onLoadingComplete={handleLoadingComplete} />
         )}
-        <div style={{ 
-          opacity: !isMounted || isLoading ? 0 : 1, 
-          transition: 'opacity 0.5s ease' 
-        }}>
-          <MainHeader/>
+        <div
+          style={{
+            opacity: !isMounted || isLoading ? 0 : 1,
+            transition: "opacity 0.5s ease",
+          }}
+        >
+          <MainHeader />
           {children}
-          <MainFooter/>
+          <MainFooter />
         </div>
       </body>
     </html>
