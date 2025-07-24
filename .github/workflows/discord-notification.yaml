@@ -12,33 +12,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          
-      - name: Install Vercel CLI
-        run: npm install -g vercel
-        
-      - name: Get Vercel deployment info
-        id: vercel-info
-        run: |
-          # Vercel APIを使用してプロジェクト情報とデプロイメント情報を取得
-          # プロジェクトのドメイン設定を取得
-          PROJECT_INFO=$(curl -s -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" \
-            "https://api.vercel.com/v9/projects/${{ secrets.VERCEL_PROJECT_ID }}")
-          
-          # カスタムドメインがある場合はそれを使用、なければデフォルトドメインを使用
-          CUSTOM_DOMAIN=$(echo "$PROJECT_INFO" | jq -r '.alias[0].domain // empty')
-          
-          if [ -n "$CUSTOM_DOMAIN" ]; then
-            echo "deployment_url=https://$CUSTOM_DOMAIN" >> $GITHUB_OUTPUT
-          else
-            # デフォルトのVercelドメインを使用
-            PROJECT_NAME=$(echo "$PROJECT_INFO" | jq -r '.name')
-            echo "deployment_url=https://$PROJECT_NAME.vercel.app" >> $GITHUB_OUTPUT
-          fi
-        
       - name: Send Discord Notification
         run: |
           curl -H "Content-Type: application/json" \
@@ -66,7 +39,7 @@ jobs:
                        },
                        {
                          \"name\": \"🔗 デプロイURL\",
-                         \"value\": \"[ポートフォリオを見る](${{ steps.vercel-info.outputs.deployment_url }})\",
+                         \"value\": \"[ポートフォリオを見る](https://portfolio-sshunnns-projects.vercel.app/)\",
                          \"inline\": false
                        }
                      ],
