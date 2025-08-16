@@ -298,9 +298,11 @@ export default function Icon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={`${styles.icon} ${className}`}
-      style={{ 
-        color: color,
-        '--stroke-width': strokeWidth 
+      style={{
+        color,
+        ...(strokeWidth !== undefined
+          ? { '--stroke-width': strokeWidth }
+          : {})
       } as React.CSSProperties}
     >
       {iconContent}
