@@ -6,7 +6,6 @@ import styles from "./MyTipsTemplate.module.scss";
 import ContentCard from "../components/Molecules/ContentCard";
 import { ContentItem } from "@/models/contentModel";
 
-
 interface TipsTopProps {
   // headerTitle: string;
   // headerDescription: string;
@@ -39,43 +38,38 @@ export default function MyTipsTopTemplate({
         <div className={styles.myTips__section}>
           <h2 className={styles.myTips__sectionTitle}>便利なツール</h2>
           <div className={styles.myTips__grid}>
-            <div className={styles.myTips__card}>
+            <div key="vscode-extensions" className={styles.myTips__card}>
               <h3>VS Code Extensions</h3>
               <p>開発効率を上げる必須拡張機能をまとめました。</p>
             </div>
-            <div className={styles.myTips__card}>
+            <div key="git-tips" className={styles.myTips__card}>
               <h3>Git Tips</h3>
               <p>よく使うGitコマンドとトラブルシューティング。</p>
             </div>
-            <div className={styles.myTips__card}>
+            <div key="chrome-devtools" className={styles.myTips__card}>
               <h3>Chrome DevTools</h3>
               <p>デバッグとパフォーマンス最適化のテクニック。</p>
             </div>
           </div>
         </div>
-
-          {contentItems.length > 0 && (
-            contentItems.map((item, index) => {
-              <div
-                key={item.id}
-                className={`${styles.contentCarousel__slide}`}
-              >
-                <ContentCard item={item} />
-              </div>
-            
-          )}
+        {contentItems.length > 0 &&
+          contentItems.map((item) => (
+            <div key={`content-${item.id}`} className={`${styles.contentCarousel__slide}`}>
+              <ContentCard item={item} />
+            </div>
+          ))}
         <div className={styles.myTips__section}>
           <h2 className={styles.myTips__sectionTitle}>つまずきポイント</h2>
           <div className={styles.myTips__grid}>
-            <div className={styles.myTips__card}>
+            <div key="nextjs-tips" className={styles.myTips__card}>
               <h3>Next.js の注意点</h3>
               <p>SSR/CSRでハマりやすいポイントと解決法。</p>
             </div>
-            <div className={styles.myTips__card}>
+            <div key="typescript-tips" className={styles.myTips__card}>
               <h3>TypeScript Tips</h3>
               <p>型定義でよくある問題と型安全性の向上方法。</p>
             </div>
-            <div className={styles.myTips__card}>
+            <div key="css-tips" className={styles.myTips__card}>
               <h3>CSS の落とし穴</h3>
               <p>レスポンシブデザインとブラウザ互換性の対策。</p>
             </div>
