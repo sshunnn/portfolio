@@ -7,48 +7,80 @@ export interface ContentItem {
   link?: string;
 }
 
-export const getContentItems = async (): Promise<ContentItem[]> => {
+interface ContentItems {
+  [key: string]: ContentItem[];
+}
+
+export const getContentItems = async (pageName?: string): Promise<ContentItem[]> => {
   try {
     // TODO: APIできるまでmockデータを返す
-    const items: ContentItem[] = [
-      {
-        id: "1",
-        title: "ポートフォリオサイト",
-        description: "Next.jsとTypescriptで構築されたモダンなポートフォリオサイト。レスポンシブデザインとアニメーションにこだわりました。",
-        type: "rock",
-        link: "/portfolio"
-      },
-      {
-        id: "2",
-        title: "開発 MyTips",
-        description: "開発時に役立つTipsをまとめました。特定の技術ではなく、役立つソフト・ツール、つまづいたことなどを記載しています。",
-        type: "water",
-        link: "/dev/mytips"
-      },
-      {
-        id: "3",
-        title: "なんか入れる",
-        description: "React Nativeで開発したクロスプラットフォームアプリ。直感的な操作性と美しいデザインが特徴。",
-        type: "rock",
-        link: "/project/mobile-app"
-      },
-      {
-        id: "4",
-        title: "なんか入れる",
-        description: "D3.jsとVue.jsを活用したインタラクティブなダッシュボード。複雑なデータを分かりやすく表示。",
-        type: "water",
-        link: "/project/dashboard"
-      },
-      {
-        id: "5",
-        title: "なんか入れる",
-        description: "機械学習を活用したカスタマーサポートBot。自然言語処理により高精度な応答を実現。",
-        type: "rock",
-        link: "/project/ai-bot"
-      }
-    ];
+    const items: ContentItems = {
+      top: [
+        {
+          id: "1",
+          title: "ポートフォリオサイト",
+          description: "Next.jsとTypescriptで構築されたモダンなポートフォリオサイト。レスポンシブデザインとアニメーションにこだわりました。",
+          type: "rock",
+          link: "/portfolio"
+        },
+        {
+          id: "2",
+          title: "開発 MyTips",
+          description: "開発時に役立つTipsをまとめました。特定の技術ではなく、役立つソフト・ツール、つまづいたことなどを記載しています。",
+          type: "water",
+          link: "/dev/mytips"
+        },
+        {
+          id: "3",
+          title: "なんか入れる",
+          description: "React Nativeで開発したクロスプラットフォームアプリ。直感的な操作性と美しいデザインが特徴。",
+          type: "rock",
+          link: "/project/mobile-app"
+        },
+        {
+          id: "4",
+          title: "なんか入れる",
+          description: "D3.jsとVue.jsを活用したインタラクティブなダッシュボード。複雑なデータを分かりやすく表示。",
+          type: "water",
+          link: "/project/dashboard"
+        },
+        {
+          id: "5",
+          title: "なんか入れる",
+          description: "機械学習を活用したカスタマーサポートBot。自然言語処理により高精度な応答を実現。",
+          type: "rock",
+          link: "/project/ai-bot"
+        }
+      ],
+      tips: [
+        {
+          id: "1",
+          title: "Next.js の注意点",
+          description: "SSR/CSRでハマりやすいポイントと解決法。",
+          type: "rock",
+          link: "/portfolio"
+        },
+        {
+          id: "2",
+          title: "TypeScript Tips",
+          description: "型定義でよくある問題と型安全性の向上方法。",
+          type: "water",
+          link: "/dev/mytips"
+        },
+      ],
+      dev: [
+        
+      ],
+      
+    };
 
-    return items;
+    if (!pageName) {
+      // pageNameが指定されていない場合は、すべてのアイテムをフラット配列で返す
+      return Object.values(items).flat();
+    }
+
+    // 指定されたページ名のアイテムを返す
+    return items[pageName] || [];
   } catch (error) {
     console.error('Error fetching content items:', error);
     return [];

@@ -1,5 +1,10 @@
-import MyTipsTemplate from "@/views/templates/MyTipsTemplate";
+import MyTipsTopTemplate from "@/views/templates/MyTipsTopTemplate";
+import { getTipsTopContent } from "@/controllers/tipsTopController";
 
-export default function MyTipsPage() {
-  return <MyTipsTemplate />;
+export default async function MyTipsPage() {
+  // get Server Side
+  const { headerTitle, headerDescription, contentItems } =
+    await getTipsTopContent();
+
+  return <MyTipsTopTemplate contentItems={contentItems} />;
 }

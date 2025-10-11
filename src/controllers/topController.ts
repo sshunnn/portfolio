@@ -1,5 +1,5 @@
 // src/controllers/contentController.ts
-import { ContentItem, getContentItems } from "@/models/contentModel";
+import { getContentItems } from "@/models/contentModel";
 
 export async function getHomePageContent() {
   const contentItems = await getContentItems();

@@ -3,8 +3,21 @@
 import { useRouter } from "next/navigation";
 import Icon from "@/views/components/Atoms/Icon";
 import styles from "./MyTipsTemplate.module.scss";
+import ContentCard from "../components/Molecules/ContentCard";
+import { ContentItem } from "@/models/contentModel";
 
-export default function MyTipsTemplate() {
+
+interface TipsTopProps {
+  // headerTitle: string;
+  // headerDescription: string;
+  contentItems: ContentItem[];
+}
+
+export default function MyTipsTopTemplate({
+  // headerTitle,
+  // headerDescription,
+  contentItems,
+}: TipsTopProps) {
   const router = useRouter();
 
   const handleBackClick = () => {
@@ -14,17 +27,12 @@ export default function MyTipsTemplate() {
   return (
     <div className={styles.myTips}>
       <div className={styles.myTips__header}>
-        <button 
-          onClick={handleBackClick}
-          className={styles.myTips__backButton}
-        >
+        <button onClick={handleBackClick} className={styles.myTips__backButton}>
           <Icon name="arrow-left" size={18} />
           戻る
         </button>
         <h1 className={styles.myTips__title}>開発 MyTips</h1>
-        <p className={styles.myTips__subtitle}>
-          開発時に役立つTips集
-        </p>
+        <p className={styles.myTips__subtitle}>開発時に役立つTips集</p>
       </div>
 
       <div className={styles.myTips__content}>
@@ -46,6 +54,16 @@ export default function MyTipsTemplate() {
           </div>
         </div>
 
+          {contentItems.length > 0 && (
+            contentItems.map((item, index) => {
+              <div
+                key={item.id}
+                className={`${styles.contentCarousel__slide}`}
+              >
+                <ContentCard item={item} />
+              </div>
+            
+          )}
         <div className={styles.myTips__section}>
           <h2 className={styles.myTips__sectionTitle}>つまずきポイント</h2>
           <div className={styles.myTips__grid}>

@@ -1,5 +1,5 @@
 import HomePage from "@/views/templates/HomePage";
-import { getHomePageContent } from "@/controllers/contentController";
+import { getHomePageContent } from "@/controllers/topController";
 
 export default async function Home() {
   // get Server Side
