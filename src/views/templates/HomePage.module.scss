@@ -78,6 +78,57 @@
     }
   }
 
+  &__blogSection {
+    margin-top: $service-size * 10;
+    padding-bottom: $service-size * 10;
+    position: relative;
+    z-index: 5; // Ensure it sits above any absolute positioning if needed
+    background: #f5f5f7; // Maintain background continuity
+    width: 100%; // Ensure full width in column flex
+  }
+
+  &__blogGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: $service-size * 4;
+    margin-top: $service-size * 6;
+  }
+
+  &__viewAllWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: $service-size * 6;
+  }
+
+  &__viewAllButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 32px;
+    background: transparent;
+    border: 1px solid $gray-400;
+    border-radius: 30px;
+    color: $gray-800;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+
+    svg {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover {
+      background: $gray-800;
+      color: white;
+      border-color: $gray-800;
+
+      svg {
+        transform: translateX(4px);
+      }
+    }
+  }
+
   &__mainLeadText {
     margin-top: $service-size * 4;
     font-size: $service-font-size-mf;
@@ -91,6 +142,7 @@
 .MainContent {
   &__wrapper {
     display: flex;
+    flex-direction: column; // Stack children vertically
     justify-content: center;
     align-items: center;
     padding: $service-size * 4 $service-size * 4;

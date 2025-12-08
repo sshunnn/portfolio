@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import Icon from '@/views/components/Atoms/Icon';
 import styles from "./styles.module.scss";
 
@@ -41,16 +42,24 @@ export default function MainHeader() {
   return (
     <header className={`${styles.MainHeader} ${isScrolled ? styles['MainHeader--scrolled'] : ''}`}>
       <div className={styles.MainHeader__wrapper}>
-        <div className={styles.MainHeader__logo}>
+        <Link href="/" className={styles.MainHeader__logo} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
           <LogoIcon />
           <div className={styles.MainHeader__brandContainer}>
             <span className={styles.MainHeader__siteName}>Shun&apos;s logs</span>
             <span className={styles.MainHeader__tagline}>Portfolio</span>
           </div>
-        </div>
+        </Link>
         
         {/* デスクトップナビゲーション */}
         <nav className={styles.MainHeader__navigationWrapper}>
+          <Link
+            href="/blog"
+            className={styles.MainHeader__headerLink}
+            onClick={closeMobileMenu}
+          >
+            <Icon name="edit" size={16} /> {/* Using edit icon for blog/log */}
+            <span className={styles.MainHeader__linkText}>Blog</span>
+          </Link>
           <a
             href="/dev/mytips"
             className={styles.MainHeader__headerLink}
@@ -91,6 +100,14 @@ export default function MainHeader() {
         {/* モバイルメニュー */}
         <div className={`${styles.MainHeader__mobileMenu} ${isMobileMenuOpen ? styles['MainHeader__mobileMenu--open'] : ''}`}>
           <nav className={styles.MainHeader__mobileNav}>
+            <Link
+              href="/blog"
+              className={styles.MainHeader__mobileLink}
+              onClick={closeMobileMenu}
+            >
+              <Icon name="edit" size={18} />
+              <span>Blog</span>
+            </Link>
             <a
               href="/dev/mytips"
               className={styles.MainHeader__mobileLink}

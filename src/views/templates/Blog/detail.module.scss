@@ -1,0 +1,157 @@
+@use "../../../styles/variables.scss" as *;
+
+.BlogDetail {
+  min-height: 100vh;
+  background-color: $wood-bg-light;
+  color: $wood-text-main;
+  padding-top: 140px; // Fixed header gap
+  padding-bottom: 80px;
+
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  &__header {
+    margin-bottom: 40px;
+  }
+
+  &__backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: $gray-600;
+    text-decoration: none;
+    font-size: 14px;
+    margin-bottom: 24px;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $wood-primary;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    color: $gray-600;
+  }
+
+  &__date, &__author {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 24px;
+    color: $gray-900;
+  }
+
+  &__tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__tag {
+    background: rgba($wood-primary, 0.1);
+    color: $wood-primary;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  &__thumbnailWrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    font-size: 18px;
+    line-height: 1.8;
+    color: $gray-800;
+
+    p {
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 48px;
+      margin-bottom: 24px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba($wood-primary, 0.2);
+    }
+
+    h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+
+    ul, ol {
+      margin-bottom: 24px;
+      padding-left: 24px;
+      
+      li {
+        margin-bottom: 8px;
+      }
+    }
+
+    blockquote {
+      border-left: 4px solid $wood-primary;
+      padding-left: 16px;
+      margin: 24px 0;
+      font-style: italic;
+      color: $gray-600;
+      background: rgba($wood-primary, 0.05);
+      padding: 16px;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    code {
+      background: $gray-200;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+  }
+}
+
+// レスポンシブ
+@media (max-width: 768px) {
+  .BlogDetail {
+    &__title {
+      font-size: 24px;
+    }
+    
+    &__thumbnailWrapper {
+      margin-bottom: 32px;
+    }
+    
+    &__content {
+      font-size: 16px;
+    }
+  }
+}
