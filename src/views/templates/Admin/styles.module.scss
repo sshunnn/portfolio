@@ -1,4 +1,5 @@
 @use "../../../styles/variables.scss" as *;
+@use "sass:color";
 
 .AdminBlogNew {
   min-height: 100vh;
@@ -132,7 +133,7 @@
       color: white;
 
       &:hover {
-        background: darken($wood-primary, 10%);
+        background: color.scale($wood-primary, $lightness: -10%);
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba($wood-primary, 0.3);
       }
