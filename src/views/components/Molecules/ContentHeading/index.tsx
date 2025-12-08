@@ -1,8 +1,6 @@
-import styles from "./styles.module.scss";
 import { createElement } from "react";
+import styles from "./styles.module.scss";
 
-// TODO classNameを作成してimportする
-// wrapperのスタイルのclassNameを当てれるるようにする。
 
 type headingLevel = "h1" | "h2" | "h3" | "h4" | "h5";
 
@@ -10,7 +8,7 @@ export type Props = {
   headLevel: headingLevel;
   text: string;
   className?: string;
-  icon?: string | null; // TODO ここのtypeの定義を追加する
+  icon?: string | null;
   iconType?: "before" | "after";
 };
 

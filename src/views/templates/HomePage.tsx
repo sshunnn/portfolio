@@ -22,7 +22,7 @@ export default function HomePage({
           <div className={styles.Top__gradientLayer}></div>
 
           <div className={styles.Top__particlesContainer}>
-            {[...Array(30)].map((_, i) => (
+            {Array.from({ length: 30 }).map((_, i) => (
               <div
                 key={i}
                 className={styles.Top__particle}

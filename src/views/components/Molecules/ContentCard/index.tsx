@@ -1,7 +1,7 @@
 "use client";
 
-import { ContentItem } from "@/models/contentModel";
 import { useRouter } from "next/navigation";
+import { ContentItem } from "@/models/contentModel";
 import styles from "./styles.module.scss";
 
 interface ContentCardProps {

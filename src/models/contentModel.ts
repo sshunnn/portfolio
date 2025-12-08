@@ -7,10 +7,9 @@ export interface ContentItem {
   link?: string;
 }
 
-export const getContentItems = async (): Promise<ContentItem[]> => {
-  try {
-    // TODO: APIできるまでmockデータを返す
-    const items: ContentItem[] = [
+export const getContentItems = (): ContentItem[] => {
+    // mock data
+    return [
       {
         id: "1",
         title: "ポートフォリオサイト",
@@ -48,9 +47,9 @@ export const getContentItems = async (): Promise<ContentItem[]> => {
       }
     ];
 
-    return items;
+    return Promise.resolve(items);
   } catch (error) {
     console.error('Error fetching content items:', error);
-    return [];
+    return Promise.resolve([]);
   }
 };

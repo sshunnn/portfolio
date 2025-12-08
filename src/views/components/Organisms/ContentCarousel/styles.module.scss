@@ -3,89 +3,54 @@
 .contentCarousel {
   width: 100%;
   position: relative;
-  padding: $service-size * 8 $service-size * 4; // パディングを適切なサイズに調整
-  overflow: visible; // カルーセル全体でオーバーフローを許可
-  margin: $service-size * 6 0; // 上下のマージンを適切なサイズに調整
+  padding: 0 0 $service-size * 8 0;
+  overflow: hidden;
+  margin: $service-size * 8 0;
 
   &__wrapper {
     position: relative;
     display: flex;
     align-items: center;
-    gap: $service-size * 4;
-    overflow: visible; // 強調表示の丸みが見えるように変更
-    padding: $service-size * 4 0; // パディングを調整
-    min-height: 320px; // カードの拡大時に必要な最小高さ（240px * 1.05 + マージン）
-    width: 100%; // 幅を明示的に設定
-    contain: layout; // レイアウトの制御を改善
+    padding: $service-size * 4 0;
+    width: 100%;
+    min-height: 400px;
   }
 
   &__container {
     display: flex;
-    gap: $service-size * 6;
-    flex: 1;
-    position: relative;
+    gap: 24px;
     align-items: center;
-    justify-content: flex-start;
-    transition: transform 0.5s ease;
-    width: auto; // fit-contentから変更して、より柔軟にレイアウト
-    min-width: 100%; // 最小幅を設定
-    padding: $service-size * 6 0; // パディングを適切なサイズに調整
-    overflow: visible; // コンテナレベルでもオーバーフローを許可
-    margin: 0 auto; // 中央寄せ
-    transform-style: preserve-3d; // 3D変換の継承を保持
+    width: auto;
+    margin: 0 auto;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
+    padding: 0;
   }
 
   &__slide {
     flex: 0 0 auto;
+    width: 600px;
+    height: 340px;
     position: relative;
-    transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    opacity: 0.6;
-    transform: scale(0.88);
-    filter: blur(1px);
-    margin: $service-size * 4 0; // 上下にマージンを追加して拡大時のスペースを確保
+    transition: all 0.6s ease;
+    opacity: 0.4;
+    transform: scale(0.92);
+    cursor: pointer;
 
     &--active {
       opacity: 1;
-      transform: scale(1.05); // 拡大率を少し下げて見切れを防ぐ
-      filter: blur(0);
-      z-index: 10;
-      margin: 0; // アクティブ時はマージンをリセットして最大限に拡大
-      
-      // 新しいカードデザインに合わせた強調効果
-      .contentCard {
-        &__glow {
-          opacity: 1;
-          transform: scale(1.02);
-          animation: modernGlow 3s ease-in-out infinite alternate;
-        }
-        
-        // より自然で美しいシャドウ効果
-        box-shadow: 
-          0 32px 80px rgba(0, 0, 0, 0.15),
-          0 16px 40px rgba(0, 0, 0, 0.08),
-          0 8px 20px rgba(0, 0, 0, 0.04);
-        
-        // カード自体の境界線も強調
-        border-color: rgba(255, 255, 255, 0.3);
-        
-        // 内容の視認性を向上
-        .contentCard__content {
-          transform: translateZ(0); // ハードウェアアクセラレーション
-        }
-      }
+      transform: scale(1.0);
+      z-index: 5;
+      cursor: default;
     }
 
-    // ホバー時の効果（非選択カード用）
-    &:not(&--active):hover {
-      opacity: 0.75;
-      transform: scale(0.9);
-      filter: blur(0.5px);
-      
-      .contentCard {
-        box-shadow: 
-          0 15px 50px rgba(99, 102, 241, 0.1),
-          0 6px 20px rgba(0, 0, 0, 0.08);
-      }
+    &:hover:not(&--active) {
+      opacity: 0.6;
+    }
+    
+    > div {
+      width: 100% !important;
+      height: 100% !important;
     }
   }
 
@@ -93,339 +58,106 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 56px;
-    height: 56px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.95);
-    color: #6366f1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #1d1d1f;
     cursor: pointer;
     z-index: 20;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 
-      0 6px 25px rgba(0, 0, 0, 0.08),
-      0 3px 12px rgba(0, 0, 0, 0.04);
-    backdrop-filter: blur(20px);
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    // モダンなグラデーション背景
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, 
-        #6366f1 0%, 
-        #8b45db 50%,
-        #a527b0 100%
-      );
-      border-radius: 50%;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      z-index: -1;
-    }
-
-    svg {
-      transition: all 0.4s ease;
-      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-    }
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     &:hover:not(:disabled) {
-      transform: translateY(-50%) scale(1.12);
-      box-shadow: 
-        0 12px 40px rgba(99, 102, 241, 0.25),
-        0 6px 20px rgba(0, 0, 0, 0.08);
-      color: white;
-      
-      &::before {
-        opacity: 1;
-      }
-      
-      svg {
-        transform: scale(1.15);
-        filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.15));
-      }
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(-50%) scale(0.98);
-      transition: transform 0.15s ease;
+      background: #ffffff;
+      transform: translateY(-50%) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
     &:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      
-      &:hover {
-        transform: translateY(-50%);
-        box-shadow: 
-          0 6px 25px rgba(0, 0, 0, 0.08),
-          0 3px 12px rgba(0, 0, 0, 0.04);
-      }
+      opacity: 0;
+      pointer-events: none;
     }
 
     &--prev {
-      left: $service-size * 4;
+      left: 4%; 
     }
 
     &--next {
-      right: $service-size * 4;
+      right: 4%;
     }
   }
 
   &__indicators {
     display: flex;
     justify-content: center;
-    gap: $service-size * 2;
-    margin-top: $service-size * 8;
+    gap: 12px;
+    margin-top: 24px;
   }
 
   &__dot {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
     border: none;
-    background: rgba(99, 102, 241, 0.25);
+    background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 0.3s ease;
+    padding: 0;
+    margin: 0;
 
     &:hover:not(:disabled) {
-      background: rgba(99, 102, 241, 0.5);
-      transform: scale(1.3);
-    }
-
-    &:disabled {
-      cursor: not-allowed;
+      background: rgba(0, 0, 0, 0.5);
     }
 
     &--active {
-      background: linear-gradient(135deg, 
-        #6366f1 0%, 
-        #8b45db 50%,
-        #a527b0 100%
-      );
-      transform: scale(1.5);
-      box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
-      animation: modernDotPulse 2s ease-in-out infinite alternate;
+      background: #1d1d1f;
+      transform: scale(1.1);
     }
   }
 
   &__controls {
-    position: absolute;
-    top: $service-size * 4;
-    right: $service-size * 4;
-    z-index: 15;
-  }
-
-  &__playButton {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    border: 2px solid rgba(99, 102, 241, 0.3);
-    background: rgba(255, 255, 255, 0.9);
-    color: #6366f1;
-    font-size: $service-font-size-sm;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-
-    &:hover {
-      background: rgba(99, 102, 241, 0.1);
-      border-color: rgba(99, 102, 241, 0.6);
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.15);
-    }
-
-    &--playing {
-      background: rgba(99, 102, 241, 0.1);
-      border-color: rgba(99, 102, 241, 0.5);
-      animation: modernPlayingPulse 2.5s ease-in-out infinite;
-    }
+    display: none;
   }
 
   &__noContent {
     text-align: center;
-    padding: $service-size * 12;
-    font-size: $service-font-size-l;
+    padding: 40px;
     color: #666;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  }
-}
-
-// アニメーション定義
-@keyframes modernGlow {
-  0% {
-    opacity: 0.8;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.005);
-  }
-}
-
-@keyframes elegantPulse {
-  0% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0.7;
-    transform: scale(1.005);
-  }
-}
-
-@keyframes modernDotPulse {
-  0% {
-    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.4);
-  }
-  100% {
-    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.6);
-  }
-}
-
-@keyframes modernPlayingPulse {
-  0% {
-    border-color: rgba(99, 102, 241, 0.3);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  }
-  50% {
-    border-color: rgba(99, 102, 241, 0.7);
-    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
-  }
-  100% {
-    border-color: rgba(99, 102, 241, 0.3);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   }
 }
 
 // レスポンシブ対応
 @media (max-width: 768px) {
   .contentCarousel {
-    padding: $service-size * 6 $service-size * 2;
-
-    &__wrapper {
-      gap: $service-size * 2;
-      padding: $service-size * 3 0;
-      min-height: 280px; // タブレット用の適切な最小高さ
-    }
-
-    &__container {
-      gap: $service-size * 4;
-      padding: $service-size * 4 0;
-    }
+    min-height: auto;
 
     &__slide {
-      transform: scale(0.82);
+      width: 70vw; // タブレット〜SPは画面幅基準
+      height: 40vw; 
+      transform: scale(0.9);
 
       &--active {
-        transform: scale(1.02);
+        transform: scale(1.0);
       }
-
-      &:not(&--active):hover {
-        transform: scale(0.86);
-      }
-    }
-
-    &__navButton {
-      width: 40px;
-      height: 40px;
-
-      svg {
-        width: 16px;
-        height: 16px;
-      }
-
-      &--prev {
-        left: $service-size * 2;
-      }
-
-      &--next {
-        right: $service-size * 2;
-      }
-    }
-
-    &__indicators {
-      margin-top: $service-size * 6;
-    }
-
-    &__dot {
-      width: 10px;
-      height: 10px;
-
-      &--active {
-        transform: scale(1.3);
-      }
-    }
-
-    &__playButton {
-      width: 35px;
-      height: 35px;
-      font-size: $service-font-size-sm;
     }
   }
 }
 
 @media (max-width: 480px) {
   .contentCarousel {
-    padding: $service-size * 6 $service-size; // モバイル用のパディング調整
-
-    &__wrapper {
-      gap: $service-size;
-      padding: $service-size * 3 0; // モバイル用のパディング調整
-      min-height: 250px; // モバイル用の適切な最小高さ
-    }
-
-    &__container {
-      padding: $service-size * 4 0; // モバイル用のパディング調整
-    }
-
     &__slide {
-      transform: scale(0.78);
-      margin: $service-size * 2 0; // モバイルでも上下マージンを確保
-
-      &--active {
-        transform: scale(0.95); // モバイルでの拡大率を調整
-        margin: 0;
-      }
-
-      &:not(&--active):hover {
-        transform: scale(0.82);
-      }
+      width: 300px;
+      height: 200px;
     }
-
+    
     &__navButton {
-      width: 35px;
-      height: 35px;
-
-      svg {
-        width: 14px;
-        height: 14px;
-      }
-
-      &--prev {
-        left: $service-size;
-      }
-
-      &--next {
-        right: $service-size;
-      }
-    }
-
-    &__controls {
-      top: $service-size * 2;
-      right: $service-size * 2;
-    }
-
-    &__indicators {
-      margin-top: $service-size * 4;
+      display: none; // スマホでは矢印消してスワイプ想定（未実装ならドットのみ）
     }
   }
 }
