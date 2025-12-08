@@ -4,46 +4,33 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
   width: 100%;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  padding: $service-size * 3 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 1000;
+  padding: 24px 0;
+  background: transparent;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.02);
 
-  // ダークモード対応の半透明背景
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      rgba(255, 255, 255, 0.05) 50%,
-      rgba(255, 255, 255, 0.08) 100%
-    );
-    z-index: -1;
-  }
-
+  // Scrolled State: Glassmorphism Pill Style
   &--scrolled {
-    padding: $service-size * 2 0;
-    background: rgba(255, 255, 255, 0.12);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 16px 0;
     
-    &::before {
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.08) 50%,
-        rgba(255, 255, 255, 0.12) 100%
-      );
+    .MainHeader__wrapper {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 100px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      padding: 12px 32px;
+      max-width: 900px; // Compact width on scroll
+    }
+
+    .MainHeader__headerLink {
+      color: #1d1d1f;
+      
+      &:hover {
+        background: rgba(0, 0, 0, 0.05);
+      }
     }
   }
 
@@ -53,93 +40,53 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 $service-size * 6;
+    padding: 0 48px;
     width: 100%;
     box-sizing: border-box;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    gap: $service-size * 3;
+    gap: 12px;
     cursor: pointer;
-    transition: transform 0.3s ease;
-
-    &:hover {
-      transform: translateY(-1px);
-    }
+    text-decoration: none;
+    z-index: 2;
   }
 
   &__logoIcon {
-    width: 40px;
-    height: 40px;
-    filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.2));
-    transition: filter 0.3s ease;
-
-    &:hover {
-      filter: drop-shadow(0 4px 12px rgba(102, 126, 234, 0.3));
-    }
+    width: 32px;
+    height: 32px;
+    color: #1d1d1f;
   }
 
   &__brandContainer {
     display: flex;
     flex-direction: column;
-    gap: $service-size * 0.5;
+    justify-content: center;
   }
 
   &__siteName {
-    font-size: $service-font-size-xl;
+    font-size: 18px;
     font-weight: 700;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: none;
-    line-height: 1.2;
+    color: #1d1d1f;
+    line-height: 1;
+    letter-spacing: -0.02em;
   }
 
   &__tagline {
-    font-size: $service-font-size-l;
-    color: rgba(102, 126, 234, 0.7);
+    font-size: 10px;
     font-weight: 500;
-    letter-spacing: 0.15em;
+    color: #86868b;
     text-transform: uppercase;
-    line-height: 1;
+    letter-spacing: 0.1em;
+    margin-top: 2px;
   }
 
   &__navigationWrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: $service-size * 2;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: $service-size * 8;
-    padding: $service-size * 2;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.3),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.02);
-    position: relative;
-
-    // ガラス効果の強化
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.05) 50%,
-        rgba(255, 255, 255, 0.1) 100%
-      );
-      border-radius: $service-size * 8;
-      z-index: -1;
-    }
+    gap: 8px;
 
     @media (max-width: 768px) {
       display: none;
@@ -147,103 +94,73 @@
   }
 
   &__headerLink {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: $service-size * 2;
-    font-size: $service-font-size-sm;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-size: 13px;
     font-weight: 500;
-    color: rgba(0, 0, 0, 0.8);
-    transition: all 0.3s ease;
-    padding: $service-size * 3 $service-size * 4;
-    border-radius: $service-size * 6;
+    color: #1d1d1f;
     text-decoration: none;
-    backdrop-filter: blur(10px);
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.08) 0%, rgba(118, 75, 162, 0.06) 100%);
-      border-radius: $service-size * 6;
-      opacity: 0;
-      transition: all 0.3s ease;
-      z-index: -1;
-    }
+    transition: all 0.2s ease;
+    background: transparent;
 
     &:hover {
-      color: #667eea;
-      transform: translateY(-2px);
-
-      &::before {
-        opacity: 1;
-        background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.12) 100%);
-      }
-
-      svg {
-        transform: scale(1.1);
-        filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
-      }
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
     }
-
-    svg {
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 1px 4px rgba(102, 126, 234, 0.1));
-    }
+    
+    // Initial state (on hero image): slightly bolder or readable
+    // Assuming hero image is light, dark text is fine. 
+    // If hero is dark, we might need to invert colors initially.
   }
 
   &__linkText {
     position: relative;
-    z-index: 1;
-    font-weight: 600;
   }
 
-  // ハンバーガーメニュー
+  // Hamburger Menu
   &__hamburger {
     display: none;
     flex-direction: column;
-    justify-content: space-around;
-    width: 28px;
-    height: 24px;
+    justify-content: space-between;
+    width: 44px;
+    height: 44px;
+    padding: 12px;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: $service-size * 2;
     z-index: 1001;
-    border-radius: $service-size * 2;
-    transition: background-color 0.3s ease;
-
+    border-radius: 50%;
+    
     @media (max-width: 768px) {
       display: flex;
     }
 
     &:hover {
-      background-color: rgba(102, 126, 234, 0.1);
+      background: rgba(0,0,0,0.05);
     }
 
     span {
+      display: block;
       width: 100%;
-      height: 3px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      height: 2px;
+      background: #1d1d1f;
       border-radius: 2px;
-      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      transform-origin: center;
+      transition: all 0.3s ease;
     }
 
     &--open {
+      background: rgba(255,255,255,0.8);
+      
       span {
         &:nth-child(1) {
           transform: translateY(7px) rotate(45deg);
         }
-
         &:nth-child(2) {
           opacity: 0;
-          transform: scaleX(0);
         }
-
         &:nth-child(3) {
           transform: translateY(-7px) rotate(-45deg);
         }
@@ -251,243 +168,71 @@
     }
   }
 
-  // モバイルメニュー
+  // Mobile Menu
   &__mobileMenu {
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 0;
     left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 
-      0 8px 32px rgba(0, 0, 0, 0.08),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transform: translateY(-20px);
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     opacity: 0;
-    visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        rgba(255, 255, 255, 0.05) 100%
-      );
-      z-index: -1;
-    }
-
-    @media (min-width: 769px) {
-      display: none;
-    }
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 
     &--open {
-      transform: translateY(0);
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
     }
   }
 
   &__mobileNav {
     display: flex;
     flex-direction: column;
-    padding: $service-size * 6;
-    gap: $service-size * 2;
+    gap: 32px;
+    text-align: center;
   }
 
   &__mobileLink {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1d1d1f;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: $service-size * 3;
-    padding: $service-size * 4 $service-size * 6;
-    font-size: $service-font-size-mf;
-    font-weight: 600;
-    color: rgba(0, 0, 0, 0.8);
-    border-radius: $service-size * 4;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    backdrop-filter: blur(10px);
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(102, 126, 234, 0.12) 0%, rgba(118, 75, 162, 0.08) 100%);
-      transition: left 0.3s ease;
-    }
-
-    &:hover {
-      color: #667eea;
-      transform: translateX(8px);
-
-      &::before {
-        left: 0;
-      }
-
-      svg {
-        transform: scale(1.1);
-        filter: drop-shadow(0 2px 8px rgba(102, 126, 234, 0.3));
-      }
-    }
-
-    svg {
-      transition: all 0.3s ease;
-      filter: drop-shadow(0 1px 4px rgba(102, 126, 234, 0.1));
+    gap: 12px;
+    justify-content: center;
+    
+    span {
+      display: inline-block;
     }
   }
 
-  // オーバーレイ
   &__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    z-index: 999;
-    opacity: 0;
-    animation: fadeInOverlay 0.3s ease forwards;
-
-    @media (min-width: 769px) {
-      display: none;
-    }
+    display: none;
   }
 }
 
-// アニメーション
-@keyframes fadeInOverlay {
-  to {
-    opacity: 1;
-  }
-}
-
-// レスポンシブ対応
-@media (max-width: 768px) {
-  .MainHeader {
-    &__wrapper {
-      padding: 0 $service-size * 4;
-    }
-
-    &__logo {
-      gap: $service-size * 2;
-    }
-
-    &__logoIcon {
-      width: 32px;
-      height: 32px;
-    }
-
-    &__siteName {
-      font-size: $service-font-size-l;
-    }
-
-    &__tagline {
-      font-size: $service-font-size-m * 0.9;
-    }
-
-    &__brandContainer {
-      gap: $service-size * 0.25;
-    }
-  }
-}
-
+// Media Queries for fine-tuning
 @media (max-width: 480px) {
   .MainHeader {
-    padding: $service-size * 2 0;
+    padding: 16px 0;
+    
+    &__wrapper {
+      padding: 0 24px;
+    }
 
     &--scrolled {
-      padding: $service-size * 1.5 0;
-    }
-
-    &__wrapper {
-      padding: 0 $service-size * 3;
-    }
-
-    &__logo {
-      gap: $service-size * 1.5;
-    }
-
-    &__logoIcon {
-      width: 28px;
-      height: 28px;
-    }
-
-    &__siteName {
-      font-size: $service-font-size-mf;
-    }
-
-    &__tagline {
-      font-size: $service-font-size-sm * 0.8;
-    }
-
-    &__mobileNav {
-      padding: $service-size * 4;
-    }
-
-    &__mobileLink {
-      padding: $service-size * 3 $service-size * 4;
-      font-size: $service-font-size-sm;
-      gap: $service-size * 2;
-    }
-
-    &__hamburger {
-      width: 24px;
-      height: 20px;
-      padding: $service-size;
-    }
-  }
-}
-
-// タブレット向け調整
-@media (min-width: 769px) and (max-width: 1024px) {
-  .MainHeader {
-    &__wrapper {
-      padding: 0 $service-size * 5;
-    }
-
-    &__navigationWrapper {
-      gap: $service-size;
-      padding: $service-size * 1.5;
-    }
-
-    &__headerLink {
-      padding: $service-size * 2.5 $service-size * 3;
-      font-size: $service-font-size-sm;
-      gap: $service-size * 1.5;
-    }
-  }
-}
-
-// 大画面向け調整
-@media (min-width: 1200px) {
-  .MainHeader {
-    &__wrapper {
-      max-width: 1400px;
-      padding: 0 $service-size * 8;
-    }
-
-    &__navigationWrapper {
-      gap: $service-size * 3;
-      padding: $service-size * 2.5;
-    }
-
-    &__headerLink {
-      padding: $service-size * 3.5 $service-size * 5;
-      gap: $service-size * 2.5;
+       .MainHeader__wrapper {
+         max-width: calc(100% - 32px);
+         padding: 8px 16px;
+       }
     }
   }
 }
