@@ -46,10 +46,4 @@ export const getContentItems = (): ContentItem[] => {
         link: "/project/ai-bot"
       }
     ];
-
-    return Promise.resolve(items);
-  } catch (error) {
-    console.error('Error fetching content items:', error);
-    return Promise.resolve([]);
-  }
 };

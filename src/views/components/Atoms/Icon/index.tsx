@@ -282,11 +282,10 @@ export default function Icon({
   className = '',
   color,
   strokeWidth
-}: IconProps) {
+}: IconProps): React.JSX.Element | null {
   const iconContent = iconPaths[name];
 
   if (!iconContent) {
-    console.warn(`Icon "${name}" not found`);
     return null;
   }
 

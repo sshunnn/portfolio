@@ -1,9 +1,9 @@
 import HomePage from "@/views/templates/HomePage";
 import { getHomePageContent } from "@/controllers/contentController";
 
-export default async function Home() {
+export default function Home() {
   // get Server Side
-  const { headerTitle, headerDescription, contentItems } = await getHomePageContent();
+  const { headerTitle, headerDescription, contentItems } = getHomePageContent();
   
   return (
     <HomePage

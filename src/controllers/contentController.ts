@@ -1,8 +1,12 @@
 // src/controllers/contentController.ts
-import { getContentItems } from "@/models/contentModel";
+import { ContentItem, getContentItems } from "@/models/contentModel";
 
-export async function getHomePageContent() {
-  const contentItems = await getContentItems();
+export function getHomePageContent(): {
+  headerTitle: string;
+  headerDescription: string;
+  contentItems: ContentItem[];
+} {
+  const contentItems = getContentItems();
   
   return {
     headerTitle: "About my portfolio Detail",
