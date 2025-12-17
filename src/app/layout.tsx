@@ -5,6 +5,7 @@ import MainHeader from "@/views/components/Molecules/MainHeader";
 import MainFooter from "@/views/components/Molecules/MainFooter";
 import LoadingScreen from "@/views/components/Organisms/LoadingScreen";
 import "../styles/globals.scss";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function RootLayout({
   children,
@@ -38,6 +39,7 @@ export default function RootLayout({
           {children}
           <MainFooter />
         </div>
+        <Analytics />
       </body>
     </html>
   );
